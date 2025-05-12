@@ -17,19 +17,16 @@ const AboutSection: React.FC = () => {
           <div className="flex flex-col justify-center">
             <h3 className="text-2xl font-bold mb-4">Who I Am</h3>
             <p className="text-muted-foreground mb-6">
-              I'm a passionate web developer with a strong focus on creating engaging user experiences.
-              My journey in web development started several years ago, and I've been in love with creating
-              digital experiences ever since.
+              I am Computer Science Engineer with expertise in Data Structures & Algorithms, Machine Learning, NLP, Blockchain, Web & Android
+ Development. Passionate about solving real-world problems with technology..
             </p>
             <p className="text-muted-foreground mb-6">
-              I specialize in front-end development using modern technologies like React, TypeScript, and 
-              Tailwind CSS. I believe in writing clean, maintainable code that provides an exceptional 
-              user experience.
+              I am an M.Tech student in Computer Science and Engineering, passionate about developing innovative solutions in both software development and machine learning. My technical expertise spans multiple programming languages, including C, C++, Python along with web technologies like HTML, CSS, JavaScript, Next JS, Flask and Django.
             </p>
             <p className="text-muted-foreground">
-              When I'm not coding, you can find me exploring new technologies, contributing to open-source
-              projects, or enjoying nature.
+              With a strong foundation in machine learning, deep learning, and NLP, I enjoy solving real-world challenges. I have experience in Android development using React Native and have explored blockchain with Solidity. My skills also include data structures, MySQL, Firebase, and full-stack development. I’m passionate about continuous learning and growth. I aim to contribute to impactful software engineering and ML projects.
             </p>
+          
           </div>
           
           <div className="bg-secondary/50 p-8 rounded-lg shadow-lg border border-muted">
@@ -41,7 +38,7 @@ const AboutSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground">Name</h4>
-                  <p className="text-lg font-medium">John Doe</p>
+                  <p className="text-lg font-medium">Sayan Das</p>
                 </div>
               </div>
               
@@ -51,7 +48,7 @@ const AboutSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground">Email</h4>
-                  <p className="text-lg font-medium">hello@example.com</p>
+                  <p className="text-lg font-medium">sayandas02001@gmail.com</p>
                 </div>
               </div>
               
@@ -61,18 +58,18 @@ const AboutSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground">Location</h4>
-                  <p className="text-lg font-medium">New York, USA</p>
+                  <p className="text-lg font-medium">India</p>
                 </div>
               </div>
               
               <div className="flex items-center gap-4">
-                <div className="p-3 bg-emerald-400/20 rounded-md">
+                {/* <div className="p-3 bg-emerald-400/20 rounded-md">
                   <Calendar className="h-6 w-6 text-emerald-400" />
-                </div>
-                <div>
+                </div> */}
+                {/* <div>
                   <h4 className="text-sm text-muted-foreground">Experience</h4>
                   <p className="text-lg font-medium">5+ Years</p>
-                </div>
+                </div> */}
               </div>
             </div>
           </div>

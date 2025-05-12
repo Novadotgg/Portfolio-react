@@ -3,7 +3,15 @@ import React, { useState } from 'react';
 import { ExternalLink, Github, Grid, List } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-
+import pic from '../pics/Todo.jpg';
+import url from '../pics/url.jpg';
+import ev from '../pics/evergreen.png';
+import mlmp from '../pics/mlimp.jpg';
+import mov from '../pics/movime.jpg';
+import cr from '../pics/cropiee.jpg';
+import bc from '../pics/bchaain.jpg';
+import nnet from '../pics/nn.jpg';
+import aci from '../pics/aqi.jpg';
 interface Project {
   id: number;
   title: string;
@@ -12,99 +20,110 @@ interface Project {
   tags: string[];
   githubUrl: string;
   liveUrl: string;
-  category: 'web' | 'mobile' | 'design';
+  category: 'web' | 'mobile' | 'design' | 'security';
 }
 
 const projects: Project[] = [
   {
     id: 1,
-    title: "E-Commerce Platform",
-    description: "A full-stack e-commerce platform with React, Node.js, and MongoDB, featuring product listings, shopping cart, and payment processing.",
-    image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    tags: ["React", "Node.js", "MongoDB", "Express"],
-    githubUrl: "#",
-    liveUrl: "#",
+    title: "To-do list",
+    description: "Created a to-do list to store todos', marking their priorities, cutting them once completed and deleting the todos'",
+    // image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+    image:pic,
+    tags: ["Python", "django", "HTML", "CSS"],
+    githubUrl: "https://github.com/Novadotgg/to-do-list",
+    liveUrl: "https://to-do-list-sayan.netlify.app/",
     category: "web"
   },
   {
     id: 2,
-    title: "Task Management App",
-    description: "A task management application with drag-and-drop functionality, user authentication, and real-time updates.",
-    image: "https://images.unsplash.com/photo-1581091226825-a6a2a5aee158",
-    tags: ["React", "Firebase", "Tailwind CSS", "TypeScript"],
-    githubUrl: "#",
+    title: "URL Shortener",
+    description: "Created a predefined size alphanumeric URL from the original URL using LAMP stack.",
+    image: url,
+    tags: ["PHP", "HTML", "MySQL", "Apache", "htaccess", "Linux"],
+    githubUrl: "https://github.com/Novadotgg/URL-shortener",
     liveUrl: "#",
     category: "web"
   },
   {
     id: 3,
-    title: "Weather Dashboard",
-    description: "A weather dashboard that shows forecasts for multiple locations with interactive charts and maps.",
-    image: "https://images.unsplash.com/photo-1488590528505-98d2b5aba04b",
-    tags: ["React", "Chart.js", "OpenWeatherAPI", "Styled Components"],
-    githubUrl: "#",
-    liveUrl: "#",
+    title: "Evergreen",
+    description: "This is a project based on reclycling and donations where people can join us as donors and can donate old and used books papers, newspapers etc to recycle and reuse those used papers to form a ueful product.",
+    image: ev,
+    tags: ["HTML", "CSS", "PHP", "MySQL"],
+    githubUrl: "https://github.com/Novadotgg/Evergreen",
+    liveUrl: "https://evrgrin.netlify.app/",
     category: "web"
   },
+  // {
+  //   id: 4,
+  //   title: "Fitness Tracking Mobile App",
+  //   description: "A mobile application to track workouts, set goals, and analyze progress with charts and statistics.",
+  //   image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
+  //   tags: ["React Native", "Redux", "Firebase", "Expo"],
+  //   githubUrl: "#",
+  //   liveUrl: "#",
+  //   category: "mobile"
+  // },
   {
     id: 4,
-    title: "Fitness Tracking Mobile App",
-    description: "A mobile application to track workouts, set goals, and analyze progress with charts and statistics.",
-    image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
-    tags: ["React Native", "Redux", "Firebase", "Expo"],
-    githubUrl: "#",
+    title: "MLIMP",
+    description: "App with Machine Learning applications consiting of 5 different use cases of Machine Learning.",
+    image: mlmp,
+    tags: ["Java", "XML", "Kotlin"],
+    githubUrl: "https://github.com/Novadotgg/Mlimp",
     liveUrl: "#",
     category: "mobile"
   },
   {
     id: 5,
-    title: "Social Media App",
-    description: "A social media application with features like posting, commenting, liking, and user profiles.",
-    image: "https://images.unsplash.com/photo-1531297484001-80022131f5a1",
-    tags: ["React Native", "GraphQL", "Apollo", "MongoDB"],
-    githubUrl: "#",
+    title: "Movime",
+    description: "Simple app with movies and anime sites",
+    image: mov,
+    tags: ["XML"],
+    githubUrl: "https://github.com/Novadotgg/Movime",
     liveUrl: "#",
     category: "mobile"
   },
   {
     id: 6,
-    title: "Recipe Finder App",
-    description: "A mobile app for finding recipes based on available ingredients with favorites and shopping list features.",
-    image: "https://images.unsplash.com/photo-1498050108023-c5249f4df085",
-    tags: ["React Native", "Context API", "RESTful API", "Async Storage"],
+    title: "Cropiee",
+    description: "Chatbot that assisits farmers with crops, their prices, soil conditions, etc",
+    image: cr,
+    tags: ["ML", "NLP", "Flask", "Python"],
     githubUrl: "#",
     liveUrl: "#",
-    category: "mobile"
+    category: "design"
   },
   {
     id: 7,
-    title: "E-learning Platform UI",
-    description: "A comprehensive UI design for an e-learning platform with course listings, video players, and user dashboard.",
-    image: "https://images.unsplash.com/photo-1487058792275-0ad4aaf24ca7",
-    tags: ["Figma", "Adobe XD", "UI/UX", "Prototype"],
+    title: "Mini LLM",
+    description: "LLM using RAG to answer from the pdf provided",
+    image: nnet,
+    tags: ["RAG", "Langchain", "Python", "Flask"],
     githubUrl: "#",
     liveUrl: "#",
     category: "design"
   },
   {
     id: 8,
-    title: "Banking App UI Design",
-    description: "A modern UI design for a banking application with account management, transfers, and analytics.",
-    image: "https://images.unsplash.com/photo-1649972904349-6e44c42644a7",
-    tags: ["Figma", "Wireframing", "Prototyping", "UI Kit"],
-    githubUrl: "#",
+    title: "AQI classification",
+    description: "ML models to predict AQI buckets based on the index.",
+    image: aci,
+    tags: ["ML", "DL"],
+    githubUrl: "https://github.com/Novadotgg/AQI",
     liveUrl: "#",
     category: "design"
   },
   {
     id: 9,
-    title: "Travel Booking UI",
-    description: "A UI design for a travel booking platform with search, booking flow, and user account features.",
-    image: "https://images.unsplash.com/photo-1518770660439-4636190af475",
-    tags: ["Adobe XD", "Photoshop", "Illustrator", "User Testing"],
-    githubUrl: "#",
+    title: "Securing  CRN using Blockchain",
+    description: "Used Blockchain to secure CRN from SSDF attacks.",
+    image: bc,
+    tags: ["Blockchain", "Solidity","Ganache","Ethereum"],
+    githubUrl: "https://github.com/Novadotgg/CRN-using-Blockchain",
     liveUrl: "#",
-    category: "design"
+    category: "security"
   }
 ];
 
@@ -124,9 +143,10 @@ const ProjectsSection: React.FC = () => {
         <Tabs defaultValue="web" className="w-full">
           <div className="flex justify-between items-center mb-8">
             <TabsList className="bg-secondary">
-              <TabsTrigger value="web">Web Development</TabsTrigger>
-              <TabsTrigger value="mobile">Mobile Apps</TabsTrigger>
-              <TabsTrigger value="design">UI/UX Design</TabsTrigger>
+              <TabsTrigger value="web">Web</TabsTrigger>
+              <TabsTrigger value="mobile">Android</TabsTrigger>
+              <TabsTrigger value="design">ML and AI</TabsTrigger>
+              <TabsTrigger value="security">Blockchain</TabsTrigger>
             </TabsList>
             
             <div className="flex gap-2">
@@ -198,6 +218,22 @@ const ProjectsSection: React.FC = () => {
               </div>
             )}
           </TabsContent>
+          <TabsContent value="security">
+            {viewMode === 'grid' ? (
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {projects.filter(p => p.category === 'security').map((project) => (
+                  <GridProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {projects.filter(p => p.category === 'security').map((project) => (
+                  <ListProjectCard key={project.id} project={project} />
+                ))}
+              </div>
+            )}
+          </TabsContent>
+
         </Tabs>
       </div>
     </section>

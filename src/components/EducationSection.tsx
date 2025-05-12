@@ -85,9 +85,9 @@ const EducationSection: React.FC = () => {
       <div className="container">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold mb-2">My <span className="text-gradient">Education</span></h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          {/* <p className="text-muted-foreground max-w-2xl mx-auto">
             Academic background and qualifications
-          </p>
+          </p> */}
         </div>
         
         <div className="max-w-3xl mx-auto">

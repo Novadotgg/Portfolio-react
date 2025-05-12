@@ -48,32 +48,33 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level }) => {
 
 const SkillsSection: React.FC = () => {
   const programmingLanguages = [
-    { name: 'C', icon: <Code size={18} />, level: 85 },
-    { name: 'C++', icon: <Code size={18} />, level: 80 },
+    { name: 'C', icon: <Code size={18} />, level: 70 },
+    { name: 'C++', icon: <Code size={18} />, level: 85 },
     { name: 'Python', icon: <Code size={18} />, level: 90 },
-    { name: 'PHP', icon: <Code size={18} />, level: 60 },
+    // { name: 'PHP', icon: <Code size={18} />, level: 60 },
   ];
 
   const webTechnologies = [
     { name: 'HTML', icon: <FileCode size={18} />, level: 95 },
     { name: 'CSS', icon: <FileCode size={18} />, level: 85 },
-    { name: 'JavaScript', icon: <FileCode size={18} />, level: 80 },
+    { name: 'JavaScript', icon: <FileCode size={18} />, level: 60 },
     { name: 'Django', icon: <FileCode size={18} />, level: 75 },
+    { name: 'React', icon: <FileCode size={18} />, level: 50 },
   ];
 
   const mobileDevelopment = [
-    { name: 'React Native', icon: <Smartphone size={18} />, level: 75 },
-    { name: 'Java', icon: <Smartphone size={18} />, level: 65 },
+    { name: 'React Native', icon: <Smartphone size={18} />, level: 60 },
+    { name: 'Java', icon: <Smartphone size={18} />, level: 45 },
   ];
 
   const databases = [
     { name: 'Firebase', icon: <Database size={18} />, level: 80 },
-    { name: 'MySQL', icon: <Database size={18} />, level: 75 },
+    { name: 'MySQL', icon: <Database size={18} />, level: 90 },
   ];
 
   const aiAndML = [
     { name: 'ML Algorithms', icon: <Brain size={18} />, level: 85 },
-    { name: 'Deep Learning', icon: <Brain size={18} />, level: 80 },
+    { name: 'Deep Learning', icon: <Brain size={18} />, level: 50 },
     { name: 'NLP', icon: <Brain size={18} />, level: 75 },
   ];
 
@@ -93,8 +94,8 @@ const SkillsSection: React.FC = () => {
   ];
 
   const otherSkills = [
-    { name: 'DS & Algorithms', icon: <Layers size={18} />, level: 85 },
-    { name: 'Blockchain', icon: <Link size={18} />, level: 70 },
+    { name: 'DS & Algorithms', icon: <Layers size={18} />, level: 65 },
+    { name: 'Blockchain', icon: <Link size={18} />, level: 50 },
   ];
 
   return (
@@ -110,7 +111,7 @@ const SkillsSection: React.FC = () => {
         <div className="space-y-12">
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Programming Languages</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {programmingLanguages.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -124,7 +125,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Web Technologies</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {webTechnologies.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -138,7 +139,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Mobile Development</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {mobileDevelopment.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -152,7 +153,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Databases</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {databases.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -166,7 +167,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Machine Learning & AI</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-4">
               {aiAndML.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -180,7 +181,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Operating Systems</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {operatingSystems.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -194,7 +195,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Tools & Platforms</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
               {toolsAndPlatforms.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
@@ -208,7 +209,7 @@ const SkillsSection: React.FC = () => {
 
           <div>
             <h3 className="text-lg font-medium mb-4 text-center">Other Skills</h3>
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
               {otherSkills.map((skill) => (
                 <SkillCard 
                   key={skill.name} 

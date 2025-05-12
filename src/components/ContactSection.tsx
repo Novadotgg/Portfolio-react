@@ -46,7 +46,7 @@ const ContactSection: React.FC = () => {
                 <div>
                   <h4 className="text-sm text-muted-foreground">Email</h4>
                   <a href="mailto:hello@example.com" className="text-lg font-medium hover:text-emerald-400">
-                    hello@example.com
+                    sayandas02001@gmail.com
                   </a>
                 </div>
               </div>
@@ -58,7 +58,7 @@ const ContactSection: React.FC = () => {
                 <div>
                   <h4 className="text-sm text-muted-foreground">Phone</h4>
                   <a href="tel:+1234567890" className="text-lg font-medium hover:text-emerald-400">
-                    +1 (234) 567-890
+                    +91 9612547652
                   </a>
                 </div>
               </div>
@@ -70,7 +70,7 @@ const ContactSection: React.FC = () => {
                 <div>
                   <h4 className="text-sm text-muted-foreground">Location</h4>
                   <p className="text-lg font-medium">
-                    New York, USA
+                    India
                   </p>
                 </div>
               </div>
