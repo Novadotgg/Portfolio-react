@@ -1,6 +1,5 @@
 
 import React from 'react';
-import { ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
@@ -38,12 +37,6 @@ const HeroSection: React.FC = () => {
               <a href="#contact">Contact Me</a>
             </Button>
           </div>
-        </div>
-        
-        <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:block">
-          <a href="#about" aria-label="Scroll down">
-            <ArrowDown className="h-6 w-6 text-emerald-400" />
-          </a>
         </div>
       </div>
     </section>
