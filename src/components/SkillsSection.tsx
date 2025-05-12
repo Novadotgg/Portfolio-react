@@ -3,12 +3,12 @@ import React from 'react';
 import { 
   Code, 
   FileCode, 
-  Android, 
+  Smartphone, 
   Database, 
   Brain, 
   Monitor, 
   GitBranch, 
-  Tool, 
+  Wrench, 
   Layers, 
   Link 
 } from 'lucide-react';
@@ -62,8 +62,8 @@ const SkillsSection: React.FC = () => {
   ];
 
   const mobileDevelopment = [
-    { name: 'React Native', icon: <Android size={18} />, level: 75 },
-    { name: 'Java', icon: <Android size={18} />, level: 65 },
+    { name: 'React Native', icon: <Smartphone size={18} />, level: 75 },
+    { name: 'Java', icon: <Smartphone size={18} />, level: 65 },
   ];
 
   const databases = [
@@ -84,12 +84,12 @@ const SkillsSection: React.FC = () => {
 
   const toolsAndPlatforms = [
     { name: 'Git', icon: <GitBranch size={18} />, level: 85 },
-    { name: 'Docker', icon: <Tool size={18} />, level: 70 },
-    { name: 'Colab', icon: <Tool size={18} />, level: 90 },
-    { name: 'Hugging Face', icon: <Tool size={18} />, level: 75 },
-    { name: 'Kaggle', icon: <Tool size={18} />, level: 80 },
-    { name: 'Langchain', icon: <Tool size={18} />, level: 65 },
-    { name: 'RAG', icon: <Tool size={18} />, level: 60 },
+    { name: 'Docker', icon: <Wrench size={18} />, level: 70 },
+    { name: 'Colab', icon: <Wrench size={18} />, level: 90 },
+    { name: 'Hugging Face', icon: <Wrench size={18} />, level: 75 },
+    { name: 'Kaggle', icon: <Wrench size={18} />, level: 80 },
+    { name: 'Langchain', icon: <Wrench size={18} />, level: 65 },
+    { name: 'RAG', icon: <Wrench size={18} />, level: 60 },
   ];
 
   const otherSkills = [
