@@ -2,12 +2,20 @@
 import React from 'react';
 import { ArrowDown } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { Avatar, AvatarImage, AvatarFallback } from '@/components/ui/avatar';
 
 const HeroSection: React.FC = () => {
   return (
     <section id="home" className="min-h-screen flex items-center justify-center pt-16">
       <div className="container">
         <div className="text-center space-y-6 max-w-3xl mx-auto">
+          <div className="flex justify-center mb-8 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+            <Avatar className="h-32 w-32 border-4 border-emerald-500 shadow-lg shadow-emerald-500/20">
+              <AvatarImage src="/placeholder.svg" alt="Profile Image" />
+              <AvatarFallback className="bg-emerald-800 text-emerald-100 text-xl">ME</AvatarFallback>
+            </Avatar>
+          </div>
+          
           <div className="space-y-2 animate-fade-in" style={{ animationDelay: '0.2s' }}>
             <h2 className="text-emerald-400 font-semibold text-lg md:text-xl">
               Welcome to my Portfolio
