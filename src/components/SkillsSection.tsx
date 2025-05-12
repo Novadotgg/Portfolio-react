@@ -1,31 +1,43 @@
 
 import React from 'react';
+import { 
+  Code, 
+  FileCode, 
+  Android, 
+  Database, 
+  Brain, 
+  Monitor, 
+  GitBranch, 
+  Tool, 
+  Layers, 
+  Link 
+} from 'lucide-react';
 
 interface SkillCardProps {
   name: string;
-  icon: string;
+  icon: React.ReactNode;
   level: number;
 }
 
 const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level }) => {
   return (
-    <div className="bg-secondary/50 p-6 rounded-lg border border-muted shadow-md card-hover">
-      <div className="text-center mb-4">
-        <div className="inline-block p-4 bg-emerald-400/20 rounded-full mb-4">
-          <span className="text-3xl" role="img" aria-label={name}>
+    <div className="bg-secondary/50 p-4 rounded-lg border border-muted shadow-md card-hover">
+      <div className="text-center mb-3">
+        <div className="inline-block p-3 bg-emerald-400/20 rounded-full mb-3">
+          <span className="text-emerald-400">
             {icon}
           </span>
         </div>
-        <h3 className="text-xl font-semibold">{name}</h3>
+        <h3 className="text-base font-semibold">{name}</h3>
       </div>
-      <div className="mt-4">
-        <div className="text-sm text-muted-foreground mb-2 flex justify-between">
+      <div className="mt-3">
+        <div className="text-xs text-muted-foreground mb-1 flex justify-between">
           <span>Proficiency</span>
           <span>{level}%</span>
         </div>
-        <div className="w-full bg-muted rounded-full h-2.5">
+        <div className="w-full bg-muted rounded-full h-1.5">
           <div 
-            className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-2.5 rounded-full" 
+            className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-1.5 rounded-full" 
             style={{ width: `${level}%` }}
           ></div>
         </div>
@@ -35,25 +47,54 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level }) => {
 };
 
 const SkillsSection: React.FC = () => {
-  const frontendSkills = [
-    { name: 'React', icon: '⚛️', level: 90 },
-    { name: 'TypeScript', icon: '📝', level: 85 },
-    { name: 'HTML5/CSS3', icon: '🎨', level: 95 },
-    { name: 'Tailwind CSS', icon: '🌬️', level: 92 },
+  const programmingLanguages = [
+    { name: 'C', icon: <Code size={18} />, level: 85 },
+    { name: 'C++', icon: <Code size={18} />, level: 80 },
+    { name: 'Python', icon: <Code size={18} />, level: 90 },
+    { name: 'PHP', icon: <Code size={18} />, level: 60 },
   ];
 
-  const backendSkills = [
-    { name: 'Node.js', icon: '🟢', level: 80 },
-    { name: 'Express', icon: '🚂', level: 75 },
-    { name: 'MongoDB', icon: '🍃', level: 70 },
-    { name: 'PostgreSQL', icon: '🐘', level: 65 },
+  const webTechnologies = [
+    { name: 'HTML', icon: <FileCode size={18} />, level: 95 },
+    { name: 'CSS', icon: <FileCode size={18} />, level: 85 },
+    { name: 'JavaScript', icon: <FileCode size={18} />, level: 80 },
+    { name: 'Django', icon: <FileCode size={18} />, level: 75 },
+  ];
+
+  const mobileDevelopment = [
+    { name: 'React Native', icon: <Android size={18} />, level: 75 },
+    { name: 'Java', icon: <Android size={18} />, level: 65 },
+  ];
+
+  const databases = [
+    { name: 'Firebase', icon: <Database size={18} />, level: 80 },
+    { name: 'MySQL', icon: <Database size={18} />, level: 75 },
+  ];
+
+  const aiAndML = [
+    { name: 'ML Algorithms', icon: <Brain size={18} />, level: 85 },
+    { name: 'Deep Learning', icon: <Brain size={18} />, level: 80 },
+    { name: 'NLP', icon: <Brain size={18} />, level: 75 },
+  ];
+
+  const operatingSystems = [
+    { name: 'Windows', icon: <Monitor size={18} />, level: 95 },
+    { name: 'Linux (Ubuntu)', icon: <Monitor size={18} />, level: 80 },
+  ];
+
+  const toolsAndPlatforms = [
+    { name: 'Git', icon: <GitBranch size={18} />, level: 85 },
+    { name: 'Docker', icon: <Tool size={18} />, level: 70 },
+    { name: 'Colab', icon: <Tool size={18} />, level: 90 },
+    { name: 'Hugging Face', icon: <Tool size={18} />, level: 75 },
+    { name: 'Kaggle', icon: <Tool size={18} />, level: 80 },
+    { name: 'Langchain', icon: <Tool size={18} />, level: 65 },
+    { name: 'RAG', icon: <Tool size={18} />, level: 60 },
   ];
 
   const otherSkills = [
-    { name: 'Git/GitHub', icon: '🔄', level: 88 },
-    { name: 'UI/UX Design', icon: '🎭', level: 75 },
-    { name: 'DevOps', icon: '🚀', level: 60 },
-    { name: 'Testing', icon: '🧪', level: 70 },
+    { name: 'DS & Algorithms', icon: <Layers size={18} />, level: 85 },
+    { name: 'Blockchain', icon: <Link size={18} />, level: 70 },
   ];
 
   return (
@@ -66,11 +107,11 @@ const SkillsSection: React.FC = () => {
           </p>
         </div>
 
-        <div className="space-y-16">
+        <div className="space-y-12">
           <div>
-            <h3 className="text-xl font-medium mb-6 text-center">Frontend Development</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {frontendSkills.map((skill, index) => (
+            <h3 className="text-lg font-medium mb-4 text-center">Programming Languages</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {programmingLanguages.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
                   name={skill.name} 
@@ -82,13 +123,13 @@ const SkillsSection: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-medium mb-6 text-center">Backend Development</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {backendSkills.map((skill, index) => (
+            <h3 className="text-lg font-medium mb-4 text-center">Web Technologies</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {webTechnologies.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
                   name={skill.name} 
-                  icon={skill.icon} 
+                  icon={skill.icon}
                   level={skill.level}
                 />
               ))}
@@ -96,13 +137,83 @@ const SkillsSection: React.FC = () => {
           </div>
 
           <div>
-            <h3 className="text-xl font-medium mb-6 text-center">Other Skills</h3>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-              {otherSkills.map((skill, index) => (
+            <h3 className="text-lg font-medium mb-4 text-center">Mobile Development</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              {mobileDevelopment.map((skill) => (
                 <SkillCard 
                   key={skill.name} 
                   name={skill.name} 
-                  icon={skill.icon} 
+                  icon={skill.icon}
+                  level={skill.level}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-4 text-center">Databases</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              {databases.map((skill) => (
+                <SkillCard 
+                  key={skill.name} 
+                  name={skill.name} 
+                  icon={skill.icon}
+                  level={skill.level}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-4 text-center">Machine Learning & AI</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-3 gap-4">
+              {aiAndML.map((skill) => (
+                <SkillCard 
+                  key={skill.name} 
+                  name={skill.name} 
+                  icon={skill.icon}
+                  level={skill.level}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-4 text-center">Operating Systems</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              {operatingSystems.map((skill) => (
+                <SkillCard 
+                  key={skill.name} 
+                  name={skill.name} 
+                  icon={skill.icon}
+                  level={skill.level}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-4 text-center">Tools & Platforms</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              {toolsAndPlatforms.map((skill) => (
+                <SkillCard 
+                  key={skill.name} 
+                  name={skill.name} 
+                  icon={skill.icon}
+                  level={skill.level}
+                />
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <h3 className="text-lg font-medium mb-4 text-center">Other Skills</h3>
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-2 gap-4">
+              {otherSkills.map((skill) => (
+                <SkillCard 
+                  key={skill.name} 
+                  name={skill.name} 
+                  icon={skill.icon}
                   level={skill.level}
                 />
               ))}
