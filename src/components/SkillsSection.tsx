@@ -51,6 +51,7 @@ const SkillsSection: React.FC = () => {
     { name: 'C', icon: <Code size={18} />, level: 70 },
     { name: 'C++', icon: <Code size={18} />, level: 85 },
     { name: 'Python', icon: <Code size={18} />, level: 90 },
+    { name: 'Java', icon: <Code size={18} />, level: 40 },
     // { name: 'PHP', icon: <Code size={18} />, level: 60 },
   ];
 
@@ -65,6 +66,7 @@ const SkillsSection: React.FC = () => {
   const mobileDevelopment = [
     { name: 'React Native', icon: <Smartphone size={18} />, level: 60 },
     { name: 'Java', icon: <Smartphone size={18} />, level: 45 },
+    { name: 'Kotlin', icon: <Smartphone size={18} />, level: 35 },
   ];
 
   const databases = [
@@ -91,6 +93,8 @@ const SkillsSection: React.FC = () => {
     { name: 'Kaggle', icon: <Wrench size={18} />, level: 80 },
     { name: 'Langchain', icon: <Wrench size={18} />, level: 65 },
     { name: 'RAG', icon: <Wrench size={18} />, level: 60 },
+    { name: 'Ganache', icon: <Wrench size={18} />, level: 80 },
+    // { name: 'VS code', icon: <Wrench size={18} />, level: 80 },
   ];
 
   const otherSkills = [

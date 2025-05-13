@@ -34,7 +34,7 @@ const HeroSection: React.FC = () => {
               Hi!!!
             </h2>
             <h1 className="text-4xl md:text-6xl font-bold tracking-tight">
-              I am <span className="text-gradient">Sayan </span> Let me show you my journey
+              I am <span className="text-gradient">Sayan </span> let me show you my journey
             </h1>
           </div>
           
@@ -44,9 +44,15 @@ const HeroSection: React.FC = () => {
           </p> */}
           
           <div className="flex gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.6s' }}>
+            {/* <Button asChild className="bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-700/20">
+              <a href="#projects">Resume</a>
+            </Button> */}
             <Button asChild className="bg-emerald-600 hover:bg-emerald-700 shadow-lg shadow-emerald-700/20">
-              <a href="#projects">View Projects</a>
+              <a href="/Sayan_resume.pdf" download>
+                Resume
+              </a>
             </Button>
+
             <Button variant="outline" asChild>
               <a href="#contact">Contact Me</a>
             </Button>

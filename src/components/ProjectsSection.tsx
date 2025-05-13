@@ -12,6 +12,7 @@ import cr from '../pics/cropiee.jpg';
 import bc from '../pics/bchaain.jpg';
 import nnet from '../pics/nn.jpg';
 import aci from '../pics/aqi.jpg';
+import twe from '../pics/tweet.jpg';
 interface Project {
   id: number;
   title: string;
@@ -124,6 +125,16 @@ const projects: Project[] = [
     githubUrl: "https://github.com/Novadotgg/CRN-using-Blockchain",
     liveUrl: "#",
     category: "security"
+  },
+  {
+    id: 10,
+    title: "X sentiment analysis",
+    description: "Use basic NLP for sentiment analysis of tweets from X",
+    image: twe,
+    tags: ["NLP","ML","Regression","Tf-Idf"],
+    githubUrl: "https://github.com/Novadotgg/Sentiment",
+    liveUrl: "#",
+    category: "design"
   }
 ];
 
@@ -145,7 +156,7 @@ const ProjectsSection: React.FC = () => {
             <TabsList className="bg-secondary">
               <TabsTrigger value="web">Web</TabsTrigger>
               <TabsTrigger value="mobile">Android</TabsTrigger>
-              <TabsTrigger value="design">ML and AI</TabsTrigger>
+              <TabsTrigger value="design">ML & AI</TabsTrigger>
               <TabsTrigger value="security">Blockchain</TabsTrigger>
             </TabsList>
             

@@ -1,33 +1,58 @@
-
-import React from 'react';
+import React, { useRef } from 'react';
 import { Mail, Phone, MapPin, Send } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import emailjs from '@emailjs/browser';
 
 const ContactSection: React.FC = () => {
+  const form = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // In a real application, you would handle form submission here
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
+
+    if (!form.current) return;
+
+    emailjs
+      .sendForm(
+        "service_vzbcp6n", // your EmailJS service ID
+        "template_dfxky86", // your EmailJS template ID
+        form.current,
+        "9xPge-1NzCrOVqISG" // your EmailJS public key
+      )
+      .then(
+        () => {
+          toast({
+            title: "Message sent!",
+            description: "Thank you for your message. I'll get back to you soon.",
+          });
+          form.current?.reset();
+        },
+        (error) => {
+          console.error("EmailJS error:", error);
+          toast({
+            title: "Message failed!",
+            description: "There was a problem sending your message. Please try again.",
+            variant: "destructive",
+          });
+        }
+      );
   };
 
   return (
     <section id="contact" className="section-padding">
       <div className="container">
         <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-2">Get In <span className="text-gradient">Touch</span></h2>
+          <h2 className="text-3xl font-bold mb-2">
+            Get In <span className="text-gradient">Touch</span>
+          </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Have a question or want to work together? Feel free to reach out to me.
           </p>
         </div>
-        
+
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
           <div className="space-y-10">
             <div>
@@ -37,7 +62,7 @@ const ContactSection: React.FC = () => {
                 to discussing new projects, creative ideas, or opportunities to be part of your vision.
               </p>
             </div>
-            
+
             <div className="space-y-6">
               <div className="flex items-center gap-4">
                 <div className="p-4 bg-emerald-400/20 rounded-full">
@@ -45,59 +70,55 @@ const ContactSection: React.FC = () => {
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground">Email</h4>
-                  <a href="mailto:hello@example.com" className="text-lg font-medium hover:text-emerald-400">
+                  <a href="mailto:sayandas02001@gmail.com" className="text-lg font-medium hover:text-emerald-400">
                     sayandas02001@gmail.com
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="p-4 bg-emerald-400/20 rounded-full">
                   <Phone className="h-6 w-6 text-emerald-400" />
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground">Phone</h4>
-                  <a href="tel:+1234567890" className="text-lg font-medium hover:text-emerald-400">
+                  <a href="tel:+919612547652" className="text-lg font-medium hover:text-emerald-400">
                     +91 9612547652
                   </a>
                 </div>
               </div>
-              
+
               <div className="flex items-center gap-4">
                 <div className="p-4 bg-emerald-400/20 rounded-full">
                   <MapPin className="h-6 w-6 text-emerald-400" />
                 </div>
                 <div>
                   <h4 className="text-sm text-muted-foreground">Location</h4>
-                  <p className="text-lg font-medium">
-                    India
-                  </p>
+                  <p className="text-lg font-medium">India</p>
                 </div>
               </div>
             </div>
           </div>
-          
+
           <div className="bg-secondary/50 rounded-lg p-8 border border-muted shadow-lg">
             <h3 className="text-xl font-bold mb-6">Send Me a Message</h3>
-            <form onSubmit={handleSubmit} className="space-y-6">
+            <form ref={form} onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="space-y-2">
-                  <label htmlFor="name" className="text-sm font-medium">
-                    Name
-                  </label>
+                  <label htmlFor="name" className="text-sm font-medium">Name</label>
                   <Input
                     id="name"
+                    name="name"
                     placeholder="Your name"
                     required
                     className="bg-background border-muted"
                   />
                 </div>
                 <div className="space-y-2">
-                  <label htmlFor="email" className="text-sm font-medium">
-                    Email
-                  </label>
+                  <label htmlFor="email" className="text-sm font-medium">Email</label>
                   <Input
                     id="email"
+                    name="email"
                     type="email"
                     placeholder="Your email"
                     required
@@ -105,34 +126,32 @@ const ContactSection: React.FC = () => {
                   />
                 </div>
               </div>
-              
+
               <div className="space-y-2">
-                <label htmlFor="subject" className="text-sm font-medium">
-                  Subject
-                </label>
+                <label htmlFor="subject" className="text-sm font-medium">Subject</label>
                 <Input
                   id="subject"
+                  name="subject"
                   placeholder="Subject"
                   required
                   className="bg-background border-muted"
                 />
               </div>
-              
+
               <div className="space-y-2">
-                <label htmlFor="message" className="text-sm font-medium">
-                  Message
-                </label>
+                <label htmlFor="message" className="text-sm font-medium">Message</label>
                 <Textarea
                   id="message"
+                  name="message"
                   placeholder="Your message..."
                   rows={5}
                   required
                   className="bg-background border-muted"
                 />
               </div>
-              
-              <Button 
-                type="submit" 
+
+              <Button
+                type="submit"
                 className="w-full bg-emerald-600 hover:bg-emerald-700"
               >
                 <Send className="h-4 w-4 mr-2" /> Send Message

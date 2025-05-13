@@ -63,13 +63,13 @@ const AboutSection: React.FC = () => {
               </div>
               
               <div className="flex items-center gap-4">
-                {/* <div className="p-3 bg-emerald-400/20 rounded-md">
+                 <div className="p-3 bg-emerald-400/20 rounded-md">
                   <Calendar className="h-6 w-6 text-emerald-400" />
-                </div> */}
-                {/* <div>
-                  <h4 className="text-sm text-muted-foreground">Experience</h4>
-                  <p className="text-lg font-medium">5+ Years</p>
-                </div> */}
+                </div> 
+                 <div>
+                  <h4 className="text-sm text-muted-foreground">Highest qualification</h4>
+                  <p className="text-lg font-medium">M.Tech</p>
+                </div> 
               </div>
             </div>
           </div>

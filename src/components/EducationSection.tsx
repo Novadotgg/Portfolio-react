@@ -15,7 +15,7 @@ interface EducationItemProps {
 const EducationItem: React.FC<EducationItemProps> = ({ degree, institution, period, grade, icon }) => {
   return (
     <Card className="mb-4 bg-secondary/50 border border-muted hover:shadow-md transition-shadow">
-      <CardHeader className="flex flex-row items-center gap-4 pb-2">
+      <CardHeader className="flex flex-row items-center gap-4 pb-1">
         <div className="p-3 bg-emerald-400/20 rounded-md">
           {icon}
         </div>
