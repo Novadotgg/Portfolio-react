@@ -11,34 +11,34 @@ const Footer: React.FC = () => {
         <div className="flex flex-col items-center mb-8">
           <h2 className="text-2xl font-bold text-gradient mb-2">Portfolio</h2>
           <p className="text-muted-foreground text-center max-w-md">
-            Building stunning digital experiences with modern web technologies.
+            Created with ❤️
           </p>
         </div>
         
         <div className="flex justify-center space-x-6 mb-8">
           <a 
-            href="#" 
+            href="https://github.com/Novadotgg" 
             className="p-2 rounded-full bg-background hover:bg-emerald-400/20 transition-colors"
             aria-label="Github"
           >
             <Github className="h-5 w-5 text-foreground hover:text-emerald-400" />
           </a>
           <a 
-            href="#" 
+            href="https://www.linkedin.com/in/sayan-das-631751217" 
             className="p-2 rounded-full bg-background hover:bg-emerald-400/20 transition-colors"
             aria-label="LinkedIn"
           >
             <Linkedin className="h-5 w-5 text-foreground hover:text-emerald-400" />
           </a>
-          <a 
+          {/* <a 
             href="#" 
             className="p-2 rounded-full bg-background hover:bg-emerald-400/20 transition-colors"
             aria-label="Twitter"
           >
             <Twitter className="h-5 w-5 text-foreground hover:text-emerald-400" />
-          </a>
+          </a> */}
           <a 
-            href="#" 
+            href="https://www.instagram.com/d_sayan_10_2?igsh=ZjZ0OGdzbzZ2YjY=" 
             className="p-2 rounded-full bg-background hover:bg-emerald-400/20 transition-colors"
             aria-label="Instagram"
           >
@@ -46,7 +46,7 @@ const Footer: React.FC = () => {
           </a>
         </div>
         
-        <div className="border-t border-muted pt-8">
+        {/* <div className="border-t border-muted pt-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-muted-foreground mb-4 md:mb-0">
               © {currentYear} Portfolio. All rights reserved.
@@ -60,7 +60,7 @@ const Footer: React.FC = () => {
               </a>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </footer>
   );
