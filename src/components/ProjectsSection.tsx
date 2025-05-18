@@ -102,7 +102,7 @@ const projects: Project[] = [
     description: "LLM using RAG to answer from the pdf provided",
     image: nnet,
     tags: ["RAG", "Langchain", "Python", "Flask"],
-    githubUrl: "#",
+    githubUrl: "https://github.com/Novadotgg/Mini-llm",
     liveUrl: "#",
     category: "design"
   },
