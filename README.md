@@ -4,10 +4,8 @@ This project is built with:
 - React
 - shadcn-ui
 - Tailwind CSS
+- 
 
-Direct link
-```
 https://sayan-pi.vercel.app/
-```
 
 ![image](https://github.com/user-attachments/assets/c3f5fb01-552a-4bea-b562-8e2f273260a3)
