@@ -13,6 +13,7 @@ import bc from '../pics/bchaain.jpg';
 import nnet from '../pics/nn.jpg';
 import aci from '../pics/aqi.jpg';
 import twe from '../pics/tweet.jpg';
+import ghub from '../pics/ghub.jpg';
 interface Project {
   id: number;
   title: string;
@@ -135,7 +136,18 @@ const projects: Project[] = [
     githubUrl: "https://github.com/Novadotgg/Sentiment",
     liveUrl: "#",
     category: "design"
-  }
+  },
+  {
+    id: 11,
+    title: "Gacker",
+    description: "Built a Gaming hub for 7 different basic games using AI'",
+    // image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
+    image:ghub,
+    tags: ["React", "Tailwind CSS", "Typescript", "shadcn-ui"],
+    githubUrl: "https://github.com/Novadotgg/Gacker",
+    liveUrl: "https://gacker.vercel.app/",
+    category: "web"
+  },
 ];
 
 const ProjectsSection: React.FC = () => {
