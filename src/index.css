@@ -5,6 +5,12 @@
 
 @layer base {
   :root {
+    body {
+  position: relative;
+  overflow-x: hidden;
+  touch-action: pan-y; /* allow vertical pan only */
+}
+
     --background: 222 47% 11%;
     --foreground: 210 40% 98%;
 
