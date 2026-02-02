@@ -92,7 +92,7 @@ const InfoItem = ({ icon, label, value }: { icon: React.ReactNode, label: string
     </div>
     <div>
       <h4 className="text-xs uppercase tracking-wider text-muted-foreground mb-1">{label}</h4>
-      <p className="text-sm font-semibold text-foreground truncate max-w-[180px]">{value}</p>
+      <p className="text-sm font-semibold text-foreground">{value}</p>
     </div>
   </div>
 );

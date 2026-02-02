@@ -197,7 +197,7 @@ const ProjectsSection: React.FC = () => {
           {['web', 'mobile', 'design', 'security'].map((category) => (
             <TabsContent key={category} value={category} className="mt-0 focus-visible:outline-none focus-visible:ring-0">
               <div className={viewMode === 'grid'
-                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
                 : "space-y-8 max-w-5xl mx-auto"
               }>
                 {projects.filter(p => p.category === category).map((project, idx) => (
@@ -268,8 +268,8 @@ const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
       className="group bg-secondary/30 backdrop-blur-lg rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-8 animate-slide-in shadow-xl will-change-transform"
       style={{ animationDelay: `${index * 0.15}s` }}
     >
-      <div className="flex flex-col lg:flex-row gap-8">
-        <div className="lg:w-1/3">
+      <div className="flex flex-col md:flex-row gap-8">
+        <div className="md:w-1/3">
           <div className="h-56 rounded-2xl overflow-hidden relative">
             <img
               src={project.image}
@@ -279,7 +279,7 @@ const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
           </div>
         </div>
 
-        <div className="lg:w-2/3 flex flex-col justify-center">
+        <div className="md:w-2/3 flex flex-col justify-center">
           <h3 className="text-3xl font-bold mb-3 tracking-tight transition-colors">
             {project.title}
           </h3>

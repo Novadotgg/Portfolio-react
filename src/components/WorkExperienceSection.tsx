@@ -123,7 +123,7 @@ export default function WorkExperienceSection() {
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 {/* Timeline Connector Dot */}
-                <div className="absolute -left-[41px] md:-left-[57px] top-0 w-10 h-10 bg-background border-2 border-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)] z-20 overflow-hidden group-hover:scale-110 transition-transform">
+                <div className="absolute -left-[53px] md:-left-[69px] top-0 w-10 h-10 bg-background border-2 border-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)] z-20 overflow-hidden group-hover:scale-110 transition-transform">
                   <div className="text-emerald-400">
                     {getIcon(exp.category)}
                   </div>

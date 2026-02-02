@@ -70,7 +70,7 @@ const SkillCategory = ({ title, skills, startIndex }: { title: string, skills: a
         </Badge>
       </h3>
     </div>
-    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
       {skills.map((skill, idx) => (
         <SkillCard
           key={skill.name}

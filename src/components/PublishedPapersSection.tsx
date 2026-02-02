@@ -51,7 +51,7 @@ export default function PublishedPapersSection() {
             >
               <Card className="relative bg-secondary/30 backdrop-blur-lg border border-white/5 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl will-change-transform">
                 <CardContent className="p-8 md:p-10">
-                  <div className="flex flex-col lg:flex-row gap-8 items-start">
+                  <div className="flex flex-col md:flex-row gap-8 items-start">
                     <div className="p-5 bg-emerald-500/10 rounded-2xl transition-colors shrink-0">
                       <BookOpen size={32} className="text-emerald-400" />
                     </div>
