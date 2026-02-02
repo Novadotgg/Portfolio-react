@@ -27,14 +27,17 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index }) => {
       className="group animate-slide-in relative"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
-      <div className="relative bg-secondary/30 backdrop-blur-lg p-5 rounded-2xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/10 hover:-translate-y-1 will-change-transform">
-        <div className="flex items-center gap-4 mb-4">
-          <div className="p-2.5 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
+      <div className="relative bg-secondary/30 backdrop-blur-lg p-4 rounded-2xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/10 hover:-translate-y-1 will-change-transform">
+        <div className="flex items-center gap-3 mb-4">
+          <div className="p-2 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors shrink-0">
             <span className="text-emerald-400 group-hover:scale-110 transition-transform inline-block">
-              {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+              {React.cloneElement(icon as React.ReactElement, { size: 18 })}
             </span>
           </div>
-          <h3 className="text-sm font-bold tracking-tight text-foreground/90 group-hover:text-emerald-400 transition-colors">
+          <h3
+            className="text-sm font-bold tracking-tight text-foreground/90 group-hover:text-emerald-400 transition-colors truncate"
+            title={name}
+          >
             {name}
           </h3>
         </div>
