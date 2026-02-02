@@ -217,7 +217,7 @@ const ProjectsSection: React.FC = () => {
 const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
   return (
     <div
-      className="group bg-secondary/30 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/5 hover:bg-secondary/40 transition-all duration-500 animate-slide-in shadow-xl hover:-translate-y-2"
+      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl overflow-hidden border border-white/5 hover:bg-secondary/40 transition-all duration-500 animate-slide-in shadow-xl hover:-translate-y-2 will-change-transform"
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="relative h-56 overflow-hidden">
@@ -265,7 +265,7 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
 const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
   return (
     <div
-      className="group bg-secondary/30 backdrop-blur-xl rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-8 animate-slide-in shadow-xl"
+      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-8 animate-slide-in shadow-xl will-change-transform"
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="flex flex-col lg:flex-row gap-8">

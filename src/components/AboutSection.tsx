@@ -64,7 +64,7 @@ const AboutSection: React.FC = () => {
               {/* Card Glow Effect */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-emerald-800 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
 
-              <div className="relative bg-secondary/40 backdrop-blur-xl p-8 rounded-2xl shadow-2xl border border-white/10">
+              <div className="relative bg-secondary/40 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-white/10 will-change-transform">
                 <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
                   <User className="h-6 w-6 text-emerald-400" />
                   Personal Information

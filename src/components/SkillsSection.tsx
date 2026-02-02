@@ -27,7 +27,7 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index }) => {
       className="group animate-slide-in relative"
       style={{ animationDelay: `${index * 0.05}s` }}
     >
-      <div className="relative bg-secondary/30 backdrop-blur-xl p-5 rounded-2xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/10 hover:-translate-y-1">
+      <div className="relative bg-secondary/30 backdrop-blur-lg p-5 rounded-2xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/10 hover:-translate-y-1 will-change-transform">
         <div className="flex items-center gap-4 mb-4">
           <div className="p-2.5 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
             <span className="text-emerald-400 group-hover:scale-110 transition-transform inline-block">

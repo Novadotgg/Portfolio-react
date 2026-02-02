@@ -49,7 +49,7 @@ export default function PublishedPapersSection() {
               className="group relative animate-slide-in"
               style={{ animationDelay: `${index * 0.2}s` }}
             >
-              <Card className="relative bg-secondary/30 backdrop-blur-xl border border-white/5 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl">
+              <Card className="relative bg-secondary/30 backdrop-blur-lg border border-white/5 transition-all duration-300 rounded-2xl overflow-hidden shadow-2xl will-change-transform">
                 <CardContent className="p-8 md:p-10">
                   <div className="flex flex-col lg:flex-row gap-8 items-start">
                     <div className="p-5 bg-emerald-500/10 rounded-2xl transition-colors shrink-0">

@@ -21,31 +21,38 @@ const CobwebBackground: React.FC = () => {
     const setCanvasSize = () => {
       const parent = canvas.parentElement;
       if (parent) {
-        canvas.width = parent.offsetWidth;
-        canvas.height = parent.offsetHeight;
+        const dpr = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = parent.offsetWidth * dpr;
+        canvas.height = parent.offsetHeight * dpr;
+        ctx.scale(dpr, dpr);
       }
     };
     setCanvasSize();
 
-    // Constellation clustering logic
-    const clusters = 6;
-    const pointsPerCluster = 15;
+    // Constellation clustering logic - scaled for mobile
+    const isMobile = window.innerWidth < 768;
+    const clusters = isMobile ? 4 : 6;
+    const pointsPerCluster = isMobile ? 10 : 15;
     const points: any[] = [];
+    const connectionThreshold = 100; // Reduced from 120
 
     const initPoints = () => {
       points.length = 0;
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+
       for (let c = 0; c < clusters; c++) {
-        const centerX = Math.random() * canvas.width;
-        const centerY = Math.random() * canvas.height;
-        const clusterVelX = (Math.random() - 0.5) * 0.2;
-        const clusterVelY = (Math.random() - 0.5) * 0.2;
+        const centerX = Math.random() * w;
+        const centerY = Math.random() * h;
+        const clusterVelX = (Math.random() - 0.5) * 0.15;
+        const clusterVelY = (Math.random() - 0.5) * 0.15;
 
         for (let p = 0; p < pointsPerCluster; p++) {
           points.push({
             x: centerX + (Math.random() - 0.5) * 200,
             y: centerY + (Math.random() - 0.5) * 200,
-            vx: clusterVelX + (Math.random() - 0.5) * 0.3,
-            vy: clusterVelY + (Math.random() - 0.5) * 0.3,
+            vx: clusterVelX + (Math.random() - 0.5) * 0.2,
+            vy: clusterVelY + (Math.random() - 0.5) * 0.2,
           });
         }
       }
@@ -54,57 +61,59 @@ const CobwebBackground: React.FC = () => {
 
     const draw = () => {
       const theme = THEMES[themeIndexRef.current];
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const w = canvas.width / (window.devicePixelRatio || 1);
+      const h = canvas.height / (window.devicePixelRatio || 1);
+      ctx.clearRect(0, 0, w, h);
 
       points.forEach(p => {
-        // Drifting clustering
         p.x += p.vx;
         p.y += p.vy;
 
-        // Mouse interaction (gentle repulsion)
         const mdx = p.x - mouseRef.current.x;
         const mdy = p.y - mouseRef.current.y;
-        const mdist = Math.sqrt(mdx * mdx + mdy * mdy);
-        if (mdist < 150) {
+        const mdistSq = mdx * mdx + mdy * mdy;
+        if (mdistSq < 22500) { // 150*150
+          const mdist = Math.sqrt(mdistSq);
           const force = (150 - mdist) / 1500;
           p.vx += mdx * force;
           p.vy += mdy * force;
         }
 
-        // Keep in bounds
         if (p.x < 0) p.vx = Math.abs(p.vx);
-        if (p.x > canvas.width) p.vx = -Math.abs(p.vx);
+        if (p.x > w) p.vx = -Math.abs(p.vx);
         if (p.y < 0) p.vy = Math.abs(p.vy);
-        if (p.y > canvas.height) p.vy = -Math.abs(p.vy);
+        if (p.y > h) p.vy = -Math.abs(p.vy);
 
-        // Friction to prevent runaway speed
         p.vx *= 0.99;
         p.vy *= 0.99;
       });
 
-      // Draw connections
-      for (let i = 0; i < points.length; i++) {
-        for (let j = i + 1; j < points.length; j++) {
-          const dx = points[i].x - points[j].x;
-          const dy = points[i].y - points[j].y;
-          const dist = Math.sqrt(dx * dx + dy * dy);
-          if (dist < 120) {
-            const opacity = (1 - dist / 120) * 0.4;
+      // Optimized Draw connections
+      ctx.lineWidth = 0.5;
+      const len = points.length;
+      for (let i = 0; i < len; i++) {
+        const p1 = points[i];
+        for (let j = i + 1; j < len; j++) {
+          const p2 = points[j];
+          const dx = p1.x - p2.x;
+          const dy = p1.y - p2.y;
+          const distSq = dx * dx + dy * dy;
+          if (distSq < 10000) { // connectionThreshold^2
+            const dist = Math.sqrt(distSq);
+            const opacity = (1 - dist / connectionThreshold) * 0.3;
             ctx.strokeStyle = theme.primary.replace("0.35", opacity.toString());
-            ctx.lineWidth = 0.6;
             ctx.beginPath();
-            ctx.moveTo(points[i].x, points[i].y);
-            ctx.lineTo(points[j].x, points[j].y);
+            ctx.moveTo(p1.x, p1.y);
+            ctx.lineTo(p2.x, p2.y);
             ctx.stroke();
           }
         }
       }
 
-      // Draw points
       points.forEach(p => {
         ctx.fillStyle = theme.dot;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1.2, 0, Math.PI * 2);
+        ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
         ctx.fill();
       });
     };

@@ -21,7 +21,7 @@ const EducationItem: React.FC<EducationItemProps> = ({ degree, institution, peri
       {/* Decorative Blur Background */}
       <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500/20 to-emerald-800/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
 
-      <Card className="relative bg-secondary/30 backdrop-blur-xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 rounded-2xl overflow-hidden shadow-xl">
+      <Card className="relative bg-secondary/30 backdrop-blur-lg border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 rounded-2xl overflow-hidden shadow-xl will-change-transform">
         <CardContent className="p-8">
           <div className="flex flex-col md:flex-row gap-6 items-start">
             <div className="p-4 bg-emerald-500/10 rounded-2xl group-hover:bg-emerald-500/20 transition-colors shrink-0">

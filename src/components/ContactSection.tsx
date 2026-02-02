@@ -95,7 +95,7 @@ const ContactSection: React.FC = () => {
               {contactInfo.map((info, idx) => (
                 <div
                   key={info.label}
-                  className="group flex items-center gap-6 p-6 rounded-2xl bg-secondary/30 backdrop-blur-xl border border-white/5 hover:border-emerald-500/30 transition-all duration-300 animate-slide-in"
+                  className="group flex items-center gap-6 p-6 rounded-2xl bg-secondary/30 backdrop-blur-lg border border-white/5 hover:border-emerald-500/30 transition-all duration-300 animate-slide-in will-change-transform"
                   style={{ animationDelay: `${idx * 0.1}s` }}
                 >
                   <div className="p-4 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
@@ -122,7 +122,7 @@ const ContactSection: React.FC = () => {
           </div>
 
           <div className="animate-slide-in" style={{ animationDelay: '0.3s' }}>
-            <div className="bg-secondary/30 backdrop-blur-xl rounded-3xl p-10 border border-white/5 shadow-2xl relative overflow-hidden group">
+            <div className="bg-secondary/30 backdrop-blur-lg rounded-3xl p-10 border border-white/5 shadow-2xl relative overflow-hidden group will-change-transform">
               {/* Subtle Form Shimmer */}
               <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-emerald-500/5 to-transparent skew-x-12 transition-all duration-1000 group-hover:left-[100%] pointer-events-none" />
 
