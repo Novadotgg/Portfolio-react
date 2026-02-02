@@ -2,14 +2,15 @@ import React from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import profilePic from "../pics/prof.png"; // Adjust path if needed
-// import CobwebBackground from "./components/CobwebBackground";
+import CobwebBackground from "./CobwebBackground";
 const HeroSection: React.FC = () => {
   return (
-    
+
     <section
       id="home"
-      className="min-h-screen flex items-center justify-center pt-16 relative z-10"
+      className="min-h-screen flex items-center justify-center pt-16 relative z-10 overflow-hidden"
     >
+      <CobwebBackground />
       <div className="container">
         <div className="text-center space-y-6 max-w-3xl mx-auto">
           {/* Avatar */}
