@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+.cobweb-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  pointer-events: none;
+}
+body {
+  background: transparent !important;
+}
