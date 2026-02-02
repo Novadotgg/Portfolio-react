@@ -1,4 +1,3 @@
-
 import React from 'react';
 import {
   Code,
@@ -10,227 +9,157 @@ import {
   GitBranch,
   Wrench,
   Layers,
-  Link
+  Link,
+  ChevronRight
 } from 'lucide-react';
+import { Badge } from "@/components/ui/badge";
 
 interface SkillCardProps {
   name: string;
   icon: React.ReactNode;
   level: number;
+  index: number;
 }
 
-const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level }) => {
+const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index }) => {
   return (
-    <div className="bg-secondary/50 p-4 rounded-lg border border-muted shadow-md card-hover">
-      <div className="text-center mb-3">
-        <div className="inline-block p-3 bg-emerald-400/20 rounded-full mb-3">
-          <span className="text-emerald-400">
-            {icon}
-          </span>
+    <div
+      className="group animate-slide-in relative"
+      style={{ animationDelay: `${index * 0.05}s` }}
+    >
+      <div className="relative bg-secondary/30 backdrop-blur-xl p-5 rounded-2xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/10 hover:-translate-y-1">
+        <div className="flex items-center gap-4 mb-4">
+          <div className="p-2.5 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
+            <span className="text-emerald-400 group-hover:scale-110 transition-transform inline-block">
+              {React.cloneElement(icon as React.ReactElement, { size: 20 })}
+            </span>
+          </div>
+          <h3 className="text-sm font-bold tracking-tight text-foreground/90 group-hover:text-emerald-400 transition-colors">
+            {name}
+          </h3>
         </div>
-        <h3 className="text-base font-semibold">{name}</h3>
-      </div>
-      <div className="mt-3">
-        <div className="text-xs text-muted-foreground mb-1 flex justify-between">
-          <span>Proficiency</span>
-          <span>{level}%</span>
-        </div>
-        <div className="w-full bg-muted rounded-full h-1.5">
-          <div
-            className="bg-gradient-to-r from-emerald-400 to-emerald-600 h-1.5 rounded-full"
-            style={{ width: `${level}%` }}
-          ></div>
+
+        <div className="space-y-2">
+          <div className="flex justify-between items-center text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60">
+            <span>Proficiency</span>
+            <span className="text-emerald-500/80">{level}%</span>
+          </div>
+          <div className="relative w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
+            <div
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full group-hover:shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all duration-1000"
+              style={{ width: `${level}%` }}
+            />
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
+const SkillCategory = ({ title, skills, startIndex }: { title: string, skills: any[], startIndex: number }) => (
+  <div className="space-y-6">
+    <div className="flex items-center gap-3">
+      <div className="h-8 w-1 bg-emerald-500 rounded-full" />
+      <h3 className="text-xl font-bold tracking-tight flex items-center gap-2">
+        {title}
+        <Badge variant="outline" className="text-[10px] opacity-50 border-white/10 uppercase">
+          {skills.length} Items
+        </Badge>
+      </h3>
+    </div>
+    <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      {skills.map((skill, idx) => (
+        <SkillCard
+          key={skill.name}
+          name={skill.name}
+          icon={skill.icon}
+          level={skill.level}
+          index={startIndex + idx}
+        />
+      ))}
+    </div>
+  </div>
+);
+
 const SkillsSection: React.FC = () => {
   const programmingLanguages = [
-    { name: 'C', icon: <Code size={18} />, level: 70 },
-    { name: 'C++', icon: <Code size={18} />, level: 85 },
-    { name: 'Python', icon: <Code size={18} />, level: 90 },
-    { name: 'Java', icon: <Code size={18} />, level: 40 },
-    // { name: 'PHP', icon: <Code size={18} />, level: 60 },
+    { name: 'C', icon: <Code />, level: 70 },
+    { name: 'C++', icon: <Code />, level: 85 },
+    { name: 'Python', icon: <Code />, level: 90 },
+    { name: 'Java', icon: <Code />, level: 40 },
   ];
 
   const webTechnologies = [
-    { name: 'HTML', icon: <FileCode size={18} />, level: 95 },
-    { name: 'CSS', icon: <FileCode size={18} />, level: 85 },
-    { name: 'JavaScript', icon: <FileCode size={18} />, level: 60 },
-    { name: 'Django', icon: <FileCode size={18} />, level: 75 },
-    { name: 'React', icon: <FileCode size={18} />, level: 50 },
-    { name: 'Fast API', icon: <FileCode size={18} />, level: 70 },
-    { name: 'Flask', icon: <FileCode size={18} />, level: 65 },
+    { name: 'HTML', icon: <FileCode />, level: 95 },
+    { name: 'CSS', icon: <FileCode />, level: 85 },
+    { name: 'JavaScript', icon: <FileCode />, level: 60 },
+    { name: 'Django', icon: <FileCode />, level: 75 },
+    { name: 'React', icon: <FileCode />, level: 50 },
+    { name: 'Fast API', icon: <FileCode />, level: 70 },
+    { name: 'Flask', icon: <FileCode />, level: 65 },
   ];
 
   const mobileDevelopment = [
-    { name: 'React Native', icon: <Smartphone size={18} />, level: 60 },
-    { name: 'Java', icon: <Smartphone size={18} />, level: 45 },
-    { name: 'Kotlin', icon: <Smartphone size={18} />, level: 35 },
+    { name: 'React Native', icon: <Smartphone />, level: 60 },
+    { name: 'Java', icon: <Smartphone />, level: 45 },
+    { name: 'Kotlin', icon: <Smartphone />, level: 35 },
   ];
 
   const databases = [
-    { name: 'Firebase', icon: <Database size={18} />, level: 80 },
-    { name: 'MySQL', icon: <Database size={18} />, level: 90 },
-    { name: 'PostgreSQL', icon: <Database size={18} />, level: 90 }
+    { name: 'Firebase', icon: <Database />, level: 80 },
+    { name: 'MySQL', icon: <Database />, level: 90 },
+    { name: 'PostgreSQL', icon: <Database />, level: 90 }
   ];
 
   const aiAndML = [
-    { name: 'ML Algorithms', icon: <Brain size={18} />, level: 85 },
-    { name: 'Deep Learning', icon: <Brain size={18} />, level: 50 },
-    { name: 'NLP', icon: <Brain size={18} />, level: 75 },
-    { name: 'Transformers', icon: <Brain size={18} />, level: 75 },
-    { name: 'Language Models', icon: <Brain size={18} />, level: 75 },
-  ];
-
-  const operatingSystems = [
-    { name: 'Windows', icon: <Monitor size={18} />, level: 95 },
-    { name: 'Linux (Ubuntu)', icon: <Monitor size={18} />, level: 80 },
+    { name: 'ML Algorithms', icon: <Brain />, level: 85 },
+    { name: 'Deep Learning', icon: <Brain />, level: 50 },
+    { name: 'NLP', icon: <Brain />, level: 75 },
+    { name: 'Transformers', icon: <Brain />, level: 75 },
+    { name: 'Language Models', icon: <Brain />, level: 75 },
   ];
 
   const toolsAndPlatforms = [
-    { name: 'Git', icon: <GitBranch size={18} />, level: 85 },
-    { name: 'Docker', icon: <Wrench size={18} />, level: 70 },
-    { name: 'Colab', icon: <Wrench size={18} />, level: 90 },
-    { name: 'Hugging Face', icon: <Wrench size={18} />, level: 75 },
-    { name: 'Kaggle', icon: <Wrench size={18} />, level: 80 },
-    { name: 'Langchain', icon: <Wrench size={18} />, level: 65 },
-    { name: 'Langgraph', icon: <Wrench size={18} />, level: 65 },
-    { name: 'Langsmith', icon: <Wrench size={18} />, level: 65 },
-    { name: 'RAG', icon: <Wrench size={18} />, level: 60 },
-    { name: 'Ganache', icon: <Wrench size={18} />, level: 80 },
-    // { name: 'VS code', icon: <Wrench size={18} />, level: 80 },
-  ];
-
-  const otherSkills = [
-    { name: 'DS & Algorithms', icon: <Layers size={18} />, level: 65 },
-    { name: 'Blockchain', icon: <Link size={18} />, level: 50 },
+    { name: 'Git', icon: <GitBranch />, level: 85 },
+    { name: 'Docker', icon: <Wrench />, level: 70 },
+    { name: 'Colab', icon: <Wrench />, level: 90 },
+    { name: 'Hugging Face', icon: <Wrench />, level: 75 },
+    { name: 'Kaggle', icon: <Wrench />, level: 80 },
+    { name: 'Langchain', icon: <Wrench />, level: 65 },
+    { name: 'Langgraph', icon: <Wrench />, level: 65 },
+    { name: 'Langsmith', icon: <Wrench />, level: 65 },
+    { name: 'RAG', icon: <Wrench />, level: 60 },
+    { name: 'Ganache', icon: <Wrench />, level: 80 },
   ];
 
   return (
-    <section id="skills" className="section-padding">
-      <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-2">My <span className="text-gradient">Skills</span></h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Technologies and tools I work with.
+    <section id="skills" className="py-24 px-4 md:px-20 bg-background relative overflow-hidden">
+      {/* Dynamic Background Glows */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container relative z-10">
+        <div className="text-center mb-20 animate-fade-in">
+          <h2 className="text-4xl font-bold mb-4 tracking-tight">
+            Technical <span className="text-gradient">Expertise</span>
+          </h2>
+          <div className="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full mb-8" />
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
+            A comprehensive overview of my technological toolkit and proficiency across multiple domains.
           </p>
         </div>
 
-        <div className="space-y-12">
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Programming Languages</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {programmingLanguages.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
+        <div className="space-y-20">
+          <SkillCategory title="Programming Languages" skills={programmingLanguages} startIndex={0} />
+          <SkillCategory title="Web Technologies" skills={webTechnologies} startIndex={4} />
+          <SkillCategory title="Machine Learning & AI" skills={aiAndML} startIndex={11} />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
+            <SkillCategory title="Databases" skills={databases} startIndex={16} />
+            <SkillCategory title="Mobile Development" skills={mobileDevelopment} startIndex={19} />
           </div>
 
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Web Technologies</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {webTechnologies.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Mobile Development</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              {mobileDevelopment.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Databases</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              {databases.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Machine Learning & AI</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-3 gap-4">
-              {aiAndML.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Operating Systems</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              {operatingSystems.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Tools & Platforms</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-              {toolsAndPlatforms.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3 className="text-lg font-medium mb-4 text-center">Other Skills</h3>
-            <div className="grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-2 gap-4">
-              {otherSkills.map((skill) => (
-                <SkillCard
-                  key={skill.name}
-                  name={skill.name}
-                  icon={skill.icon}
-                  level={skill.level}
-                />
-              ))}
-            </div>
-          </div>
+          <SkillCategory title="Tools & Platforms" skills={toolsAndPlatforms} startIndex={22} />
         </div>
       </div>
     </section>

@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
-import { ExternalLink, Github, Grid, List } from 'lucide-react';
+import { ExternalLink, Github, Grid, List, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Badge } from "@/components/ui/badge";
+
 import pic from '../pics/Todo.jpg';
 import url from '../pics/url.jpg';
 import ev from '../pics/evergreen.png';
@@ -14,6 +15,7 @@ import nnet from '../pics/nn.jpg';
 import aci from '../pics/aqi.jpg';
 import twe from '../pics/tweet.jpg';
 import ghub from '../pics/ghub.jpg';
+
 interface Project {
   id: number;
   title: string;
@@ -30,8 +32,7 @@ const projects: Project[] = [
     id: 1,
     title: "To-do list",
     description: "Created a to-do list to store todos', marking their priorities, cutting them once completed and deleting the todos'",
-    // image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    image:pic,
+    image: pic,
     tags: ["Python", "django", "HTML", "CSS"],
     githubUrl: "https://github.com/Novadotgg/to-do-list",
     liveUrl: "https://to-do-list-sayan.netlify.app/",
@@ -57,16 +58,6 @@ const projects: Project[] = [
     liveUrl: "https://evrgrin.netlify.app/",
     category: "web"
   },
-  // {
-  //   id: 4,
-  //   title: "Fitness Tracking Mobile App",
-  //   description: "A mobile application to track workouts, set goals, and analyze progress with charts and statistics.",
-  //   image: "https://images.unsplash.com/photo-1461749280684-dccba630e2f6",
-  //   tags: ["React Native", "Redux", "Firebase", "Expo"],
-  //   githubUrl: "#",
-  //   liveUrl: "#",
-  //   category: "mobile"
-  // },
   {
     id: 4,
     title: "MLIMP",
@@ -122,7 +113,7 @@ const projects: Project[] = [
     title: "Securing  CRN using Blockchain",
     description: "Used Blockchain to secure CRN from SSDF attacks.",
     image: bc,
-    tags: ["Blockchain", "Solidity","Ganache","Ethereum"],
+    tags: ["Blockchain", "Solidity", "Ganache", "Ethereum"],
     githubUrl: "https://github.com/Novadotgg/CRN-using-Blockchain",
     liveUrl: "#",
     category: "security"
@@ -132,7 +123,7 @@ const projects: Project[] = [
     title: "X sentiment analysis",
     description: "Use basic NLP for sentiment analysis of tweets from X",
     image: twe,
-    tags: ["NLP","ML","Regression","Tf-Idf"],
+    tags: ["NLP", "ML", "Regression", "Tf-Idf"],
     githubUrl: "https://github.com/Novadotgg/Sentiment",
     liveUrl: "#",
     category: "design"
@@ -141,8 +132,7 @@ const projects: Project[] = [
     id: 11,
     title: "Gacker",
     description: "Built a Gaming hub for 7 different basic games using AI'",
-    // image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d",
-    image:ghub,
+    image: ghub,
     tags: ["React", "Tailwind CSS", "Typescript", "shadcn-ui"],
     githubUrl: "https://github.com/Novadotgg/Gacker",
     liveUrl: "https://gacker.vercel.app/",
@@ -152,149 +142,116 @@ const projects: Project[] = [
 
 const ProjectsSection: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
-  
+
   return (
-    <section id="projects" className="section-padding bg-secondary/30">
-      <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl font-bold mb-2">My <span className="text-gradient">Projects</span></h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            A selection of my recent work across different platforms.
+    <section id="projects" className="py-24 px-4 md:px-20 bg-background relative overflow-hidden">
+      {/* Background elements moved to top for proper layering */}
+      <div className="absolute top-1/2 left-0 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/5 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
+
+      <div className="container relative z-10">
+        <div className="text-center mb-16 animate-fade-in">
+          <h2 className="text-4xl font-bold mb-4 tracking-tight">
+            Featured <span className="text-gradient">Projects</span>
+          </h2>
+          <div className="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full mb-8" />
+          <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
+            A curated showcase of my engineering journey across different technologies and platforms.
           </p>
         </div>
-        
+
         <Tabs defaultValue="web" className="w-full">
-          <div className="flex justify-between items-center mb-8">
-            <TabsList className="bg-secondary">
-              <TabsTrigger value="web">Web</TabsTrigger>
-              <TabsTrigger value="mobile">Android</TabsTrigger>
-              <TabsTrigger value="design">ML & AI</TabsTrigger>
-              <TabsTrigger value="security">Blockchain</TabsTrigger>
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
+            <TabsList className="bg-secondary/50 backdrop-blur-md p-1 border border-white/5 rounded-2xl h-auto">
+              {['web', 'mobile', 'design', 'security'].map((cat) => (
+                <TabsTrigger
+                  key={cat}
+                  value={cat}
+                  className="px-6 py-2.5 rounded-xl data-[state=active]:bg-emerald-500 data-[state=active]:text-white transition-all duration-300"
+                >
+                  {cat === 'web' ? 'Web' : cat === 'mobile' ? 'Android' : cat === 'design' ? 'ML & AI' : 'Blockchain'}
+                </TabsTrigger>
+              ))}
             </TabsList>
-            
-            <div className="flex gap-2">
-              <Button 
-                variant={viewMode === 'grid' ? 'default' : 'outline'} 
+
+            <div className="flex bg-secondary/50 backdrop-blur-md p-1 border border-white/5 rounded-2xl">
+              <Button
+                variant="ghost"
                 size="icon"
                 onClick={() => setViewMode('grid')}
-                aria-label="Grid view"
-                className={viewMode === 'grid' ? 'bg-emerald-600 hover:bg-emerald-700' : ''}
+                className={`w-10 h-10 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-white/5 text-muted-foreground'}`}
               >
                 <Grid className="h-4 w-4" />
               </Button>
-              <Button 
-                variant={viewMode === 'list' ? 'default' : 'outline'} 
+              <Button
+                variant="ghost"
                 size="icon"
                 onClick={() => setViewMode('list')}
-                aria-label="List view"
-                className={viewMode === 'list' ? 'bg-emerald-600 hover:bg-emerald-700' : ''}
+                className={`w-10 h-10 rounded-xl transition-all ${viewMode === 'list' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-white/5 text-muted-foreground'}`}
               >
                 <List className="h-4 w-4" />
               </Button>
             </div>
           </div>
-          
-          <TabsContent value="web">
-            {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.filter(p => p.category === 'web').map((project) => (
-                  <GridProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {projects.filter(p => p.category === 'web').map((project) => (
-                  <ListProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="mobile">
-            {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.filter(p => p.category === 'mobile').map((project) => (
-                  <GridProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {projects.filter(p => p.category === 'mobile').map((project) => (
-                  <ListProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            )}
-          </TabsContent>
-          
-          <TabsContent value="design">
-            {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.filter(p => p.category === 'design').map((project) => (
-                  <GridProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {projects.filter(p => p.category === 'design').map((project) => (
-                  <ListProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            )}
-          </TabsContent>
-          <TabsContent value="security">
-            {viewMode === 'grid' ? (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {projects.filter(p => p.category === 'security').map((project) => (
-                  <GridProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            ) : (
-              <div className="space-y-6">
-                {projects.filter(p => p.category === 'security').map((project) => (
-                  <ListProjectCard key={project.id} project={project} />
-                ))}
-              </div>
-            )}
-          </TabsContent>
 
+          {['web', 'mobile', 'design', 'security'].map((category) => (
+            <TabsContent key={category} value={category} className="mt-0 focus-visible:outline-none focus-visible:ring-0">
+              <div className={viewMode === 'grid'
+                ? "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+                : "space-y-8 max-w-5xl mx-auto"
+              }>
+                {projects.filter(p => p.category === category).map((project, idx) => (
+                  viewMode === 'grid'
+                    ? <GridProjectCard key={project.id} project={project} index={idx} />
+                    : <ListProjectCard key={project.id} project={project} index={idx} />
+                ))}
+              </div>
+            </TabsContent>
+          ))}
         </Tabs>
       </div>
     </section>
   );
 };
 
-const GridProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
   return (
-    <div className="bg-secondary/50 rounded-lg overflow-hidden border border-muted shadow-md card-hover">
-      <div className="relative h-48 overflow-hidden">
-        <img 
-          src={project.image} 
-          alt={project.title} 
-          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+    <div
+      className="group bg-secondary/30 backdrop-blur-xl rounded-3xl overflow-hidden border border-white/5 hover:bg-secondary/40 transition-all duration-500 animate-slide-in shadow-xl hover:-translate-y-2"
+      style={{ animationDelay: `${index * 0.15}s` }}
+    >
+      <div className="relative h-56 overflow-hidden">
+        <img
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
         />
       </div>
-      <div className="p-6">
-        <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-        <p className="text-muted-foreground mb-4 line-clamp-3">{project.description}</p>
-        <div className="flex flex-wrap gap-2 mb-6">
-          {project.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="px-2 py-1 bg-emerald-400/20 text-emerald-400 text-xs rounded-full">
-              {tag}
-            </span>
-          ))}
-          {project.tags.length > 3 && (
-            <span className="px-2 py-1 bg-muted text-muted-foreground text-xs rounded-full">
-              +{project.tags.length - 3}
-            </span>
-          )}
+
+      <div className="p-7 flex flex-col h-full">
+        <div className="flex-1">
+          <h3 className="text-2xl font-bold mb-3 tracking-tight transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 mb-8">
+            {project.tags.map((tag) => (
+              <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
+                {tag}
+              </Badge>
+            ))}
+          </div>
         </div>
-        <div className="flex justify-between">
-          <Button variant="outline" size="sm" asChild>
+
+        <div className="flex gap-4">
+          <Button variant="outline" size="sm" asChild className="flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" /> Code
             </a>
           </Button>
-          <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" asChild>
+          <Button size="sm" asChild className="flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-11 shadow-lg shadow-emerald-900/20">
             <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
               <ExternalLink className="h-4 w-4 mr-2" /> View
             </a>
@@ -305,38 +262,47 @@ const GridProjectCard: React.FC<{ project: Project }> = ({ project }) => {
   );
 };
 
-const ListProjectCard: React.FC<{ project: Project }> = ({ project }) => {
+const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
   return (
-    <div className="bg-secondary/50 rounded-lg border border-muted shadow-md p-6 card-hover">
-      <div className="flex flex-col lg:flex-row gap-6">
-        <div className="lg:w-1/4">
-          <div className="h-48 rounded-md overflow-hidden">
-            <img 
-              src={project.image} 
-              alt={project.title} 
-              className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+    <div
+      className="group bg-secondary/30 backdrop-blur-xl rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-8 animate-slide-in shadow-xl"
+      style={{ animationDelay: `${index * 0.15}s` }}
+    >
+      <div className="flex flex-col lg:flex-row gap-8">
+        <div className="lg:w-1/3">
+          <div className="h-56 rounded-2xl overflow-hidden relative">
+            <img
+              src={project.image}
+              alt={project.title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             />
           </div>
         </div>
-        <div className="lg:w-3/4">
-          <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-          <p className="text-muted-foreground mb-4">{project.description}</p>
-          <div className="flex flex-wrap gap-2 mb-6">
+
+        <div className="lg:w-2/3 flex flex-col justify-center">
+          <h3 className="text-3xl font-bold mb-3 tracking-tight transition-colors">
+            {project.title}
+          </h3>
+          <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
+            {project.description}
+          </p>
+          <div className="flex flex-wrap gap-2 mb-8">
             {project.tags.map((tag) => (
-              <span key={tag} className="px-2 py-1 bg-emerald-400/20 text-emerald-400 text-xs rounded-full">
+              <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
                 {tag}
-              </span>
+              </Badge>
             ))}
           </div>
-          <div className="flex gap-4">
-            <Button variant="outline" size="sm" asChild>
+
+          <div className="flex gap-4 max-w-md">
+            <Button variant="outline" asChild className="flex-1 rounded-xl h-12 border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-base">
               <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                <Github className="h-4 w-4 mr-2" /> View Code
+                <Github className="h-5 w-5 mr-3" /> Source Code
               </a>
             </Button>
-            <Button size="sm" className="bg-emerald-600 hover:bg-emerald-700" asChild>
+            <Button asChild className="flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-12 shadow-lg shadow-emerald-900/20 text-base">
               <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-4 w-4 mr-2" /> Live Demo
+                <ExternalLink className="h-5 w-5 mr-3" /> Live Demo
               </a>
             </Button>
           </div>
