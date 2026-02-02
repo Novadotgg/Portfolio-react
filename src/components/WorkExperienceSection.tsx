@@ -93,11 +93,27 @@ const parseStartDate = (duration: string): Date => {
 const experiences = [
   {
     company: "F-Ai",
+    role: "Founding Engineer",
+    duration: "January 2026",
+    location: "Bangalore, India",
+    description:
+      "Implemented the whole product design to building the internal architeture to make a better revenue source, the whole frontend to backend to integrations and deploying it in cloud and managed team of 5-10 people",
+  },
+  {
+    company: "F-Ai",
     role: "(ML/AI) R & D Engineer",
+    duration: "September 2025",
+    location: "Bangalore, India",
+    description:
+      "Started building the whole product from scratch",
+  },
+  {
+    company: "F-Ai",
+    role: "(ML/AI) R & D Engineer intern",
     duration: "June 2025",
     location: "Bangalore, India",
     description:
-      "Worked and developed the entire system from scratch, covering classical ML to transformers and LLMs.",
+      "Started with simple tasks and gradually moved to complex tasks, worked on classical ML to transformers and LLMs.",
   },
   {
     company: "IIIT Trichy",
