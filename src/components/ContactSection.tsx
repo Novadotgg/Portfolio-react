@@ -108,12 +108,12 @@ const ContactSection: React.FC = () => {
                     {info.href ? (
                       <a
                         href={info.href}
-                        className="text-base md:text-xl font-semibold text-foreground/90 hover:text-emerald-400 transition-colors break-words sm:break-normal"
+                        className="text-sm md:text-xl font-semibold text-foreground/90 hover:text-emerald-400 transition-colors break-words sm:break-normal tracking-tight"
                       >
                         {info.value}
                       </a>
                     ) : (
-                      <p className="text-base md:text-xl font-semibold text-foreground/90">{info.value}</p>
+                      <p className="text-sm md:text-xl font-semibold text-foreground/90 tracking-tight">{info.value}</p>
                     )}
                   </div>
                   {info.href && (
