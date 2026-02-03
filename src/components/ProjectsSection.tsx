@@ -217,7 +217,7 @@ const ProjectsSection: React.FC = () => {
 const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
   return (
     <div
-      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl overflow-hidden border border-white/5 hover:bg-secondary/40 transition-all duration-500 animate-slide-in shadow-xl hover:-translate-y-2 will-change-transform"
+      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl overflow-hidden border border-white/5 hover:bg-secondary/40 transition-all duration-500 animate-slide-in shadow-xl hover:-translate-y-2 will-change-transform flex flex-col h-full"
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="relative h-56 overflow-hidden">
@@ -228,15 +228,15 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
         />
       </div>
 
-      <div className="p-7 flex flex-col h-full">
+      <div className="p-6 md:p-7 flex flex-col flex-1">
         <div className="flex-1">
-          <h3 className="text-2xl font-bold mb-3 tracking-tight transition-colors">
+          <h3 className="text-xl md:text-2xl font-bold mb-3 tracking-tight transition-colors">
             {project.title}
           </h3>
-          <p className="text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
+          <p className="text-sm md:text-base text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
             {project.description}
           </p>
-          <div className="flex flex-wrap gap-2 mb-8">
+          <div className="flex flex-wrap gap-2 mb-6">
             {project.tags.map((tag) => (
               <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
                 {tag}
@@ -245,7 +245,7 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
           </div>
         </div>
 
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-auto">
           <Button variant="outline" size="sm" asChild className="flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
             <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
               <Github className="h-4 w-4 mr-2" /> Code
@@ -265,7 +265,7 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
 const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
   return (
     <div
-      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-8 animate-slide-in shadow-xl will-change-transform"
+      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-6 md:p-8 animate-slide-in shadow-xl will-change-transform"
       style={{ animationDelay: `${index * 0.15}s` }}
     >
       <div className="flex flex-col md:flex-row gap-8">
@@ -294,7 +294,7 @@ const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
             ))}
           </div>
 
-          <div className="flex gap-4 max-w-md">
+          <div className="flex flex-col sm:flex-row gap-4 max-w-md">
             <Button variant="outline" asChild className="flex-1 rounded-xl h-12 border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-base">
               <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                 <Github className="h-5 w-5 mr-3" /> Source Code
