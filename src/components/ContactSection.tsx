@@ -95,26 +95,29 @@ const ContactSection: React.FC = () => {
               {contactInfo.map((info, idx) => (
                 <div
                   key={info.label}
-                  className="group flex items-center gap-6 p-6 rounded-2xl bg-secondary/30 backdrop-blur-lg border border-white/5 hover:border-emerald-500/30 transition-all duration-300 animate-slide-in will-change-transform"
+                  className="group flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl bg-secondary/30 backdrop-blur-lg border border-white/5 hover:border-emerald-500/30 transition-all duration-300 animate-slide-in will-change-transform"
                   style={{ animationDelay: `${idx * 0.1}s` }}
                 >
-                  <div className="p-4 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors">
+                  <div className="p-3 md:p-4 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors shrink-0">
                     <span className="text-emerald-400 group-hover:scale-110 transition-transform inline-block">
                       {info.icon}
                     </span>
                   </div>
-                  <div className="flex-1">
+                  <div className="flex-1 min-w-0">
                     <h4 className="text-xs uppercase tracking-widest font-bold text-muted-foreground mb-1">{info.label}</h4>
                     {info.href ? (
-                      <a href={info.href} className="text-xl font-semibold text-foreground/90 hover:text-emerald-400 transition-colors">
+                      <a
+                        href={info.href}
+                        className="text-base md:text-xl font-semibold text-foreground/90 hover:text-emerald-400 transition-colors break-words sm:break-normal"
+                      >
                         {info.value}
                       </a>
                     ) : (
-                      <p className="text-xl font-semibold text-foreground/90">{info.value}</p>
+                      <p className="text-base md:text-xl font-semibold text-foreground/90">{info.value}</p>
                     )}
                   </div>
                   {info.href && (
-                    <ArrowRight className="h-5 w-5 text-muted-foreground/30 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all" />
+                    <ArrowRight className="h-5 w-5 text-muted-foreground/30 group-hover:text-emerald-500 group-hover:translate-x-1 transition-all shrink-0 hidden sm:block" />
                   )}
                 </div>
               ))}
