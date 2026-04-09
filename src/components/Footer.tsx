@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { Github, Linkedin, Twitter, Instagram } from 'lucide-react';
+import { Github, Linkedin, Twitter, Instagram, GraduationCap } from 'lucide-react';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -29,6 +29,13 @@ const Footer: React.FC = () => {
             aria-label="LinkedIn"
           >
             <Linkedin className="h-5 w-5 text-foreground hover:text-emerald-400" />
+          </a>
+          <a 
+            href="https://scholar.google.com/citations?hl=en&user=DW17ks4AAAAJ" 
+            className="p-2 rounded-full bg-background hover:bg-emerald-400/20 transition-colors"
+            aria-label="Google Scholar"
+          >
+            <GraduationCap className="h-5 w-5 text-foreground hover:text-emerald-400" />
           </a>
           {/* <a 
             href="#" 
