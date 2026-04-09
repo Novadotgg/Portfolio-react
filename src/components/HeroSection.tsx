@@ -1,10 +1,57 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 
 import profilePic from "../pics/prof.png";
 
 const HeroSection: React.FC = () => {
+  const [showBubbles, setShowBubbles] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if window is undefined (SSR safety, though Vite is client-side)
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    if (showBubbles) {
+      timer = setTimeout(() => {
+        setShowBubbles(false);
+      }, 20000); // 20 seconds
+    }
+    return () => clearTimeout(timer);
+  }, [showBubbles]);
+
+  const handleAvatarClick = () => {
+    if (!showBubbles) {
+      setShowBubbles(true);
+    }
+  };
+
+  // Base coordinates for desktop
+  const baseSkills = [
+    { text: "AI Assistants", x: -160, y: -130 },
+    { text: "Full-Stack SaaS", x: 0, y: -170 },
+    { text: "Predictive Models", x: 160, y: -130 },
+    { text: "Smart Contracts", x: -220, y: -40 },
+    { text: "Mobile Apps", x: 220, y: -40 },
+    { text: "RAG Pipelines", x: -200, y: 70 },
+    { text: "Custom APIs", x: 200, y: 70 },
+    { text: "Data Dashboards", x: -100, y: 160 },
+    { text: "Blockchain dApps", x: 100, y: 160 },
+  ];
+
+  // Adjust coordinates for mobile by scaling them down and tweaking positioning
+  const buildSkills = baseSkills.map(skill => ({
+    ...skill,
+    x: isMobile ? skill.x * 0.55 : skill.x,
+    y: isMobile ? skill.y * 0.65 : skill.y,
+  }));
+
   return (
     <section
       id="home"
@@ -19,7 +66,10 @@ const HeroSection: React.FC = () => {
 
           {/* Status Badge */}
           <div className="flex justify-center animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium">
+            <div 
+              className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium transition-all duration-500"
+              style={{ opacity: showBubbles ? 0 : 1, pointerEvents: showBubbles ? 'none' : 'auto', transform: showBubbles ? 'scale(0.95)' : 'scale(1)' }}
+            >
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
@@ -37,22 +87,48 @@ const HeroSection: React.FC = () => {
               {/* Animated Rings */}
               <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
 
-              <div className="relative">
+              <div 
+                className="relative cursor-pointer"
+                onClick={handleAvatarClick}
+                title="Click me!"
+              >
                 {/* Glowing Background */}
                 <div className="absolute inset-0 w-full h-full rounded-full bg-emerald-500 blur-2xl opacity-20 animate-pulse z-0" />
 
                 {/* Avatar */}
-                <Avatar className="relative h-40 w-40 sm:h-48 sm:w-48 border-4 border-emerald-500/50 shadow-2xl transition-transform duration-500 group-hover:scale-[1.02] z-10 bg-emerald-950">
+                <Avatar className="relative h-40 w-40 sm:h-48 sm:w-48 border-4 border-emerald-500/50 shadow-2xl transition-transform duration-500 group-hover:scale-[1.05] active:scale-95 z-10 bg-emerald-950">
                   <AvatarImage src={profilePic} alt="Sayan" className="object-cover" />
                   <AvatarFallback className="bg-emerald-900 text-emerald-100 text-2xl font-bold">
                     SM
                   </AvatarFallback>
                 </Avatar>
+
+                {/* Animated Chat Bubbles */}
+                {buildSkills.map((skill, index) => (
+                  <div
+                    key={index}
+                    className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out z-20 pointer-events-none flex items-center justify-center"
+                    style={{
+                      opacity: showBubbles ? 1 : 0,
+                      transform: showBubbles 
+                        ? `translate(calc(-50% + ${skill.x}px), calc(-50% + ${skill.y}px)) scale(1)` 
+                        : `translate(-50%, -50%) scale(0)`,
+                      transitionDelay: showBubbles ? `${index * 150}ms` : '0ms'
+                    }}
+                  >
+                    <div className="bg-emerald-900/90 text-emerald-100 backdrop-blur-md px-3 py-1.5 sm:px-4 sm:py-2 rounded-2xl sm:rounded-3xl text-[10px] sm:text-sm font-bold shadow-xl shadow-emerald-500/20 border-2 border-emerald-400/50 whitespace-nowrap">
+                      {skill.text}
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
 
-          <h2 className="text-emerald-400 font-semibold text-lg md:text-xl">
+          <h2 
+            className="text-emerald-400 font-semibold text-lg md:text-xl transition-all duration-500"
+            style={{ opacity: showBubbles ? 0 : 1, pointerEvents: showBubbles ? 'none' : 'auto', transform: showBubbles ? 'scale(0.95)' : 'scale(1)' }}
+          >
             Hi!!!
           </h2>
           <h1 className="text-4xl md:text-6xl font-bold tracking-tight">

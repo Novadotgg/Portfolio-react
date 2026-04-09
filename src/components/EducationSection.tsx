@@ -69,7 +69,7 @@ const EducationSection: React.FC = () => {
       degree: "M.Tech, Computer Science & Engineering",
       institution: "IIIT Trichy",
       period: "2023 – 2025",
-      grade: "CGPA: 8.5/10",
+      grade: "CGPA: 8.7/10",
       icon: <GraduationCap />
     },
     {

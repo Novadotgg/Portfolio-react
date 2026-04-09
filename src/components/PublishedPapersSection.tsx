@@ -92,11 +92,11 @@ export default function PublishedPapersSection() {
 
                       <Button
                         asChild
-                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl px-8 py-6 h-auto text-lg font-semibold group/btn relative overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                        className="bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl px-6 py-3 h-auto text-sm md:text-base font-semibold group/btn relative overflow-hidden transition-all hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                       >
-                        <a href={paper.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-3">
+                        <a href={paper.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                           <span>Read Publication</span>
-                          <ExternalLink className="h-5 w-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
+                          <ExternalLink className="h-4 w-4 md:h-5 md:w-5 group-hover/btn:translate-x-1 group-hover/btn:-translate-y-1 transition-transform" />
                           <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover/btn:translate-x-full transition-transform duration-500 skew-x-12" />
                         </a>
                       </Button>
