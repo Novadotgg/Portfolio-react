@@ -90,8 +90,8 @@ const projects: Project[] = [
   },
   {
     id: 7,
-    title: "Mini LLM",
-    description: "LLM using RAG to answer from the pdf provided",
+    title: "Mini RAG",
+    description: "RAG using LLM to answer from the pdf provided",
     image: nnet,
     tags: ["RAG", "Langchain", "Python", "Flask"],
     githubUrl: "https://github.com/Novadotgg/Mini-llm",
