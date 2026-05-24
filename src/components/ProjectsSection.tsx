@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useCallback } from 'react';
 import { ExternalLink, Github, Grid, List, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from "@/components/ui/badge";
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 import pic from '../pics/Todo.jpg';
 import url from '../pics/url.jpg';
@@ -142,6 +143,7 @@ const projects: Project[] = [
 
 const ProjectsSection: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const { ref: headingRef, isVisible: headingVisible } = useScrollReveal<HTMLDivElement>();
 
   return (
     <section id="projects" className="py-24 px-4 md:px-20 bg-background relative overflow-hidden">
@@ -150,11 +152,11 @@ const ProjectsSection: React.FC = () => {
       <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
+        <div ref={headingRef} className={`text-center mb-16 scroll-reveal ${headingVisible ? 'revealed' : ''}`}>
           <h2 className="text-4xl font-bold mb-4 tracking-tight">
             Featured <span className="text-gradient">Projects</span>
           </h2>
-          <div className="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full mb-8" />
+          <div className={`heading-line ${headingVisible ? 'revealed' : ''} mb-8`} />
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
             A curated showcase of my engineering journey across different technologies and platforms.
           </p>
@@ -215,47 +217,86 @@ const ProjectsSection: React.FC = () => {
 };
 
 const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
+  const cardRef = useRef<HTMLDivElement>(null);
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const card = cardRef.current;
+    if (!card) return;
+
+    // Disable tilt on mobile
+    if (window.innerWidth < 768) return;
+
+    const rect = card.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+    const rotateX = ((y - centerY) / centerY) * -6;
+    const rotateY = ((x - centerX) / centerX) * 6;
+
+    card.style.transform = `perspective(800px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-4px)`;
+    card.style.setProperty('--shine-x', `${(x / rect.width) * 100}%`);
+    card.style.setProperty('--shine-y', `${(y / rect.height) * 100}%`);
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    const card = cardRef.current;
+    if (!card) return;
+    card.style.transform = 'perspective(800px) rotateX(0) rotateY(0) translateY(0)';
+  }, []);
+
   return (
     <div
-      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl overflow-hidden border border-white/5 hover:bg-secondary/40 transition-all duration-500 animate-slide-in shadow-xl hover:-translate-y-2 will-change-transform flex flex-col h-full"
-      style={{ animationDelay: `${index * 0.15}s` }}
+      ref={ref}
+      className={`scroll-reveal-scale ${isVisible ? 'revealed' : ''} stagger-${Math.min(index + 1, 6)}`}
     >
-      <div className="relative h-56 overflow-hidden">
-        <img
-          src={project.image}
-          alt={project.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-        />
-      </div>
+      <div
+        ref={cardRef}
+        className="tilt-card group glass-card overflow-hidden flex flex-col h-full"
+        onMouseMove={handleMouseMove}
+        onMouseLeave={handleMouseLeave}
+      >
+        {/* Tilt shine overlay */}
+        <div className="tilt-shine" />
 
-      <div className="p-6 md:p-7 flex flex-col flex-1">
-        <div className="flex-1">
-          <h3 className="text-xl md:text-2xl font-bold mb-3 tracking-tight transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-sm md:text-base text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {project.tags.map((tag) => (
-              <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
-                {tag}
-              </Badge>
-            ))}
-          </div>
+        <div className="relative h-56 overflow-hidden project-image-overlay">
+          <img
+            src={project.image}
+            alt={project.title}
+            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          />
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-auto">
-          <Button variant="outline" size="sm" asChild className="flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
-            <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-              <Github className="h-4 w-4 mr-2" /> Code
-            </a>
-          </Button>
-          <Button size="sm" asChild className="flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-11 shadow-lg shadow-emerald-900/20">
-            <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-              <ExternalLink className="h-4 w-4 mr-2" /> View
-            </a>
-          </Button>
+        <div className="p-6 md:p-7 flex flex-col flex-1">
+          <div className="flex-1">
+            <h3 className="text-xl md:text-2xl font-bold mb-3 tracking-tight transition-colors">
+              {project.title}
+            </h3>
+            <p className="text-sm md:text-base text-muted-foreground mb-6 line-clamp-3 leading-relaxed">
+              {project.description}
+            </p>
+            <div className="flex flex-wrap gap-2 mb-6">
+              {project.tags.map((tag) => (
+                <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </div>
+
+          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-auto">
+            <Button variant="outline" size="sm" asChild className="btn-shine flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
+              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                <Github className="h-4 w-4 mr-2" /> Code
+              </a>
+            </Button>
+            <Button size="sm" asChild className="btn-shine flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-11 shadow-lg shadow-emerald-900/20">
+              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="h-4 w-4 mr-2" /> View
+              </a>
+            </Button>
+          </div>
         </div>
       </div>
     </div>
@@ -263,48 +304,52 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
 };
 
 const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ project, index }) => {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+
   return (
     <div
-      className="group bg-secondary/30 backdrop-blur-lg rounded-3xl border border-white/5 hover:bg-secondary/40 transition-all duration-500 p-6 md:p-8 animate-slide-in shadow-xl will-change-transform"
-      style={{ animationDelay: `${index * 0.15}s` }}
+      ref={ref}
+      className={`scroll-reveal ${isVisible ? 'revealed' : ''} stagger-${Math.min(index + 1, 6)}`}
     >
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="md:w-1/3">
-          <div className="h-56 rounded-2xl overflow-hidden relative">
-            <img
-              src={project.image}
-              alt={project.title}
-              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-            />
-          </div>
-        </div>
-
-        <div className="md:w-2/3 flex flex-col justify-center">
-          <h3 className="text-3xl font-bold mb-3 tracking-tight transition-colors">
-            {project.title}
-          </h3>
-          <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
-            {project.description}
-          </p>
-          <div className="flex flex-wrap gap-2 mb-8">
-            {project.tags.map((tag) => (
-              <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
-                {tag}
-              </Badge>
-            ))}
+      <div className="group glass-card p-6 md:p-8">
+        <div className="flex flex-col md:flex-row gap-8">
+          <div className="md:w-1/3">
+            <div className="h-56 rounded-2xl overflow-hidden relative project-image-overlay">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              />
+            </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md">
-            <Button variant="outline" asChild className="flex-1 rounded-xl h-12 border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-base">
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                <Github className="h-5 w-5 mr-3" /> Source Code
-              </a>
-            </Button>
-            <Button asChild className="flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-12 shadow-lg shadow-emerald-900/20 text-base">
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="h-5 w-5 mr-3" /> Live Demo
-              </a>
-            </Button>
+          <div className="md:w-2/3 flex flex-col justify-center">
+            <h3 className="text-3xl font-bold mb-3 tracking-tight transition-colors">
+              {project.title}
+            </h3>
+            <p className="text-muted-foreground mb-6 text-lg leading-relaxed">
+              {project.description}
+            </p>
+            <div className="flex flex-wrap gap-2 mb-8">
+              {project.tags.map((tag) => (
+                <Badge key={tag} variant="outline" className="bg-emerald-500/5 border-emerald-500/20 text-emerald-400/80 text-[10px] uppercase tracking-wider font-bold">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-4 max-w-md">
+              <Button variant="outline" asChild className="btn-shine flex-1 rounded-xl h-12 border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-base">
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+                  <Github className="h-5 w-5 mr-3" /> Source Code
+                </a>
+              </Button>
+              <Button asChild className="btn-shine flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-12 shadow-lg shadow-emerald-900/20 text-base">
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  <ExternalLink className="h-5 w-5 mr-3" /> Live Demo
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

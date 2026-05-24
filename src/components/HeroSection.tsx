@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import TypewriterText from "@/components/TypewriterText";
 
 import profilePic from "../pics/prof.png";
 
@@ -135,9 +136,22 @@ const HeroSection: React.FC = () => {
             I am{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-emerald-300 to-emerald-500">
               Sayan
-            </span>{" "}
+            </span>
             <br />
-            let me show you my journey
+            <span className="text-2xl md:text-4xl text-muted-foreground/90">
+              <TypewriterText 
+                phrases={[
+                  "Full-Stack Engineer",
+                  "ML Researcher",
+                  "Blockchain Innovator",
+                  "let me show you my journey"
+                ]}
+                typingSpeed={70}
+                deletingSpeed={35}
+                pauseDuration={2500}
+                className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-300 via-emerald-400 to-emerald-500"
+              />
+            </span>
           </h1>
 
           {/* CTA Buttons */}
@@ -146,14 +160,14 @@ const HeroSection: React.FC = () => {
               <Button
                 asChild
                 size="lg"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-900/40 w-full sm:w-auto px-8"
+                className="btn-shine bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-900/40 w-full sm:w-auto px-8"
               >
                 <a href="/Sayan_resume.pdf" download>
                   Download Resume
                 </a>
               </Button>
 
-              <Button variant="outline" size="lg" asChild className="w-full sm:w-auto px-8 border-emerald-500/30 hover:bg-emerald-500/10">
+              <Button variant="outline" size="lg" asChild className="btn-shine w-full sm:w-auto px-8 border-emerald-500/30 hover:bg-emerald-500/10">
                 <a href="#contact">Contact Me</a>
               </Button>
             </div>

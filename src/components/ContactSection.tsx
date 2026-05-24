@@ -4,11 +4,15 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 import emailjs from '@emailjs/browser';
 
 const ContactSection: React.FC = () => {
   const form = useRef<HTMLFormElement>(null);
   const { toast } = useToast();
+  const { ref: headingRef, isVisible: headingVisible } = useScrollReveal<HTMLDivElement>();
+  const { ref: leftRef, isVisible: leftVisible } = useScrollReveal<HTMLDivElement>({ rootMargin: '0px 0px -60px 0px' });
+  const { ref: rightRef, isVisible: rightVisible } = useScrollReveal<HTMLDivElement>({ rootMargin: '0px 0px -60px 0px' });
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -69,19 +73,19 @@ const ContactSection: React.FC = () => {
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="text-center mb-20 animate-fade-in">
+        <div ref={headingRef} className={`text-center mb-20 scroll-reveal ${headingVisible ? 'revealed' : ''}`}>
           <h2 className="text-4xl font-bold mb-4 tracking-tight">
             Get In <span className="text-gradient">Touch</span>
           </h2>
-          <div className="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full mb-8" />
+          <div className={`heading-line ${headingVisible ? 'revealed' : ''} mb-8`} />
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
             Have a question or want to work together? Feel free to reach out. I'm always open to new opportunities and creative collaborations.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
-          <div className="space-y-12">
-            <div className="animate-slide-in">
+          <div ref={leftRef} className={`space-y-12 scroll-reveal-left ${leftVisible ? 'revealed' : ''}`}>
+            <div>
               <h3 className="text-3xl font-bold mb-6 tracking-tight flex items-center gap-3">
                 <MessageSquare className="text-emerald-500 h-8 w-8" />
                 Contact Information
@@ -95,8 +99,7 @@ const ContactSection: React.FC = () => {
               {contactInfo.map((info, idx) => (
                 <div
                   key={info.label}
-                  className="group flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl bg-secondary/30 backdrop-blur-lg border border-white/5 hover:border-emerald-500/30 transition-all duration-300 animate-slide-in will-change-transform"
-                  style={{ animationDelay: `${idx * 0.1}s` }}
+                  className={`group flex items-center gap-4 md:gap-6 p-4 md:p-6 rounded-2xl glass-card hover:border-emerald-500/30 transition-all duration-300 scroll-reveal ${leftVisible ? 'revealed' : ''} stagger-${idx + 2}`}
                 >
                   <div className="p-3 md:p-4 bg-emerald-500/10 rounded-xl group-hover:bg-emerald-500/20 transition-colors shrink-0">
                     <span className="text-emerald-400 group-hover:scale-110 transition-transform inline-block">
@@ -124,10 +127,10 @@ const ContactSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="animate-slide-in" style={{ animationDelay: '0.3s' }}>
-            <div className="bg-secondary/30 backdrop-blur-lg rounded-3xl p-10 border border-white/5 shadow-2xl relative overflow-hidden group will-change-transform">
+          <div ref={rightRef} className={`scroll-reveal-right ${rightVisible ? 'revealed' : ''}`}>
+            <div className="glass-card p-10 shadow-2xl relative overflow-hidden group">
               {/* Subtle Form Shimmer */}
-              <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-emerald-500/5 to-transparent skew-x-12 transition-all duration-1000 group-hover:left-[100%] pointer-events-none" />
+              <div className="absolute top-0 -left-[100%] w-full h-full bg-gradient-to-r from-transparent via-emerald-500/5 to-transparent skew-x-12 transition-all duration-1000 group-hover:left-[100%] pointer-events-none z-[3]" />
 
               <h3 className="text-2xl font-bold mb-8 tracking-tight">Send Me a Message</h3>
               <form ref={form} onSubmit={handleSubmit} className="space-y-6">
@@ -139,7 +142,7 @@ const ContactSection: React.FC = () => {
                       name="name"
                       placeholder="Your name"
                       required
-                      className="h-12 bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all"
+                      className="h-12 bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all input-glow"
                     />
                   </div>
                   <div className="space-y-3">
@@ -150,7 +153,7 @@ const ContactSection: React.FC = () => {
                       type="email"
                       placeholder="Your email"
                       required
-                      className="h-12 bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all"
+                      className="h-12 bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all input-glow"
                     />
                   </div>
                 </div>
@@ -162,7 +165,7 @@ const ContactSection: React.FC = () => {
                     name="subject"
                     placeholder="What's this about?"
                     required
-                    className="h-12 bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all"
+                    className="h-12 bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all input-glow"
                   />
                 </div>
 
@@ -174,13 +177,13 @@ const ContactSection: React.FC = () => {
                     placeholder="Tell me more..."
                     rows={5}
                     required
-                    className="bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all resize-none"
+                    className="bg-background/50 border-white/5 focus:border-emerald-500/50 rounded-xl transition-all resize-none input-glow"
                   />
                 </div>
 
                 <Button
                   type="submit"
-                  className="w-full bg-emerald-600 hover:bg-emerald-700 h-14 rounded-xl text-lg font-bold shadow-lg shadow-emerald-900/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                  className="btn-shine w-full bg-emerald-600 hover:bg-emerald-700 h-14 rounded-xl text-lg font-bold shadow-lg shadow-emerald-900/20 transition-all hover:scale-[1.02] active:scale-[0.98]"
                 >
                   <Send className="h-5 w-5 mr-3" /> Send Message
                 </Button>

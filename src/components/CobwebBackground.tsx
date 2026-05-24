@@ -11,6 +11,7 @@ const CobwebBackground: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const themeIndexRef = useRef(0);
   const mouseRef = useRef({ x: -1000, y: -1000 });
+  const scrollRef = useRef(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -53,17 +54,27 @@ const CobwebBackground: React.FC = () => {
             y: centerY + (Math.random() - 0.5) * 200,
             vx: clusterVelX + (Math.random() - 0.5) * 0.2,
             vy: clusterVelY + (Math.random() - 0.5) * 0.2,
+            depth: 0.5 + Math.random() * 0.5, // Parallax depth factor
           });
         }
       }
     };
     initPoints();
 
+    // Parallax scroll tracking
+    const handleScroll = () => {
+      scrollRef.current = window.scrollY;
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+
     const draw = () => {
       const theme = THEMES[themeIndexRef.current];
       const w = canvas.width / (window.devicePixelRatio || 1);
       const h = canvas.height / (window.devicePixelRatio || 1);
       ctx.clearRect(0, 0, w, h);
+
+      // Parallax offset based on scroll
+      const parallaxOffset = scrollRef.current * 0.03;
 
       points.forEach(p => {
         p.x += p.vx;
@@ -93,27 +104,31 @@ const CobwebBackground: React.FC = () => {
       const len = points.length;
       for (let i = 0; i < len; i++) {
         const p1 = points[i];
+        const p1y = p1.y + parallaxOffset * p1.depth;
         for (let j = i + 1; j < len; j++) {
           const p2 = points[j];
+          const p2y = p2.y + parallaxOffset * p2.depth;
           const dx = p1.x - p2.x;
-          const dy = p1.y - p2.y;
+          const dy = p1y - p2y;
           const distSq = dx * dx + dy * dy;
           if (distSq < 10000) { // connectionThreshold^2
             const dist = Math.sqrt(distSq);
             const opacity = (1 - dist / connectionThreshold) * 0.3;
             ctx.strokeStyle = theme.primary.replace("0.35", opacity.toString());
             ctx.beginPath();
-            ctx.moveTo(p1.x, p1.y);
-            ctx.lineTo(p2.x, p2.y);
+            ctx.moveTo(p1.x, p1y);
+            ctx.lineTo(p2.x, p2y);
             ctx.stroke();
           }
         }
       }
 
       points.forEach(p => {
+        const py = p.y + parallaxOffset * p.depth;
+        const dotSize = 0.8 + p.depth * 0.5; // Larger dots = closer
         ctx.fillStyle = theme.dot;
         ctx.beginPath();
-        ctx.arc(p.x, p.y, 1, 0, Math.PI * 2);
+        ctx.arc(p.x, py, dotSize, 0, Math.PI * 2);
         ctx.fill();
       });
     };
@@ -173,6 +188,7 @@ const CobwebBackground: React.FC = () => {
         parent.removeEventListener("click", handleClick);
       }
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
     };
   }, []);
 

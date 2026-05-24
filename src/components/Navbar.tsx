@@ -18,6 +18,7 @@ const navLinks = [
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
     const handleScroll = () => {
@@ -28,6 +29,36 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Active section detection via IntersectionObserver
+  useEffect(() => {
+    const sectionIds = navLinks.map(link => link.href.replace('#', ''));
+    const observers: IntersectionObserver[] = [];
+
+    sectionIds.forEach(id => {
+      const element = document.getElementById(id);
+      if (!element) return;
+
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) {
+            setActiveSection(id);
+          }
+        },
+        {
+          rootMargin: '-30% 0px -60% 0px',
+          threshold: 0
+        }
+      );
+
+      observer.observe(element);
+      observers.push(observer);
+    });
+
+    return () => {
+      observers.forEach(obs => obs.disconnect());
+    };
+  }, []);
+
   return (
     <header className={cn(
       'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
@@ -35,16 +66,21 @@ const Navbar: React.FC = () => {
     )}>
       <nav className="container flex justify-between items-center">
         <div className="flex items-center">
-          <a href="#home" className="text-2xl font-bold tracking-tight text-gradient">Portfolio</a>
+          <a href="#home" className="text-2xl font-bold tracking-tight text-gradient logo-glow">Portfolio</a>
         </div>
 
         {/* Desktop navigation */}
-        <div className="hidden md:flex space-x-8">
+        <div className="hidden md:flex space-x-8 relative">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="font-medium transition-colors hover:text-emerald-400"
+              className={cn(
+                "nav-link-animated font-medium transition-colors",
+                activeSection === link.href.replace('#', '')
+                  ? "text-emerald-400"
+                  : "text-foreground/70 hover:text-emerald-400"
+              )}
             >
               {link.name}
             </a>
@@ -89,7 +125,12 @@ const Navbar: React.FC = () => {
               <a
                 key={link.name}
                 href={link.href}
-                className="font-medium px-4 py-2 rounded-md hover:bg-muted transition-colors"
+                className={cn(
+                  "font-medium px-4 py-2 rounded-md transition-colors",
+                  activeSection === link.href.replace('#', '')
+                    ? "bg-emerald-500/10 text-emerald-400 border-l-2 border-emerald-500"
+                    : "hover:bg-muted"
+                )}
                 onClick={() => setIsOpen(false)}
               >
                 {link.name}

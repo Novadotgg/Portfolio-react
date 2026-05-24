@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Code,
   FileCode,
@@ -13,19 +13,48 @@ import {
   ChevronRight
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 interface SkillCardProps {
   name: string;
   icon: React.ReactNode;
   level: number;
   index: number;
+  animate: boolean;
 }
 
-const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index }) => {
+const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index, animate }) => {
+  const [displayLevel, setDisplayLevel] = useState(0);
+
+  useEffect(() => {
+    if (!animate) return;
+    
+    let start: number | null = null;
+    const duration = 1400;
+    
+    const step = (timestamp: number) => {
+      if (!start) start = timestamp;
+      const elapsed = timestamp - start;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      setDisplayLevel(Math.round(eased * level));
+      
+      if (progress < 1) {
+        requestAnimationFrame(step);
+      }
+    };
+    
+    const delay = setTimeout(() => {
+      requestAnimationFrame(step);
+    }, index * 60);
+    
+    return () => clearTimeout(delay);
+  }, [animate, level, index]);
+
   return (
     <div
-      className="group animate-slide-in relative"
-      style={{ animationDelay: `${index * 0.05}s` }}
+      className={`group scroll-reveal ${animate ? 'revealed' : ''} stagger-${Math.min(index + 1, 12)}`}
     >
       <div className="relative bg-secondary/30 backdrop-blur-lg p-4 rounded-2xl border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 shadow-lg group-hover:shadow-emerald-500/10 hover:-translate-y-1 will-change-transform">
         <div className="flex items-center gap-3 mb-4">
@@ -45,12 +74,12 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index }) => {
         <div className="space-y-2">
           <div className="flex justify-between items-center text-[10px] uppercase tracking-widest font-bold text-muted-foreground/60">
             <span>Proficiency</span>
-            <span className="text-emerald-500/80">{level}%</span>
+            <span className="text-emerald-500/80">{animate ? displayLevel : 0}%</span>
           </div>
           <div className="relative w-full h-1.5 bg-white/5 rounded-full overflow-hidden">
             <div
-              className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full group-hover:shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-all duration-1000"
-              style={{ width: `${level}%` }}
+              className="absolute top-0 left-0 h-full bg-gradient-to-r from-emerald-500 to-emerald-400 rounded-full group-hover:shadow-[0_0_10px_rgba(16,185,129,0.5)] transition-shadow duration-300 skill-bar-fill"
+              style={{ width: animate ? `${level}%` : '0%', transition: `width 1.4s cubic-bezier(0.16, 1, 0.3, 1) ${index * 60}ms` }}
             />
           </div>
         </div>
@@ -59,32 +88,39 @@ const SkillCard: React.FC<SkillCardProps> = ({ name, icon, level, index }) => {
   );
 };
 
-const SkillCategory = ({ title, skills, startIndex }: { title: string, skills: any[], startIndex: number }) => (
-  <div className="space-y-6">
-    <div className="flex items-center gap-3">
-      <div className="h-8 w-1 bg-emerald-500 rounded-full" />
-      <h3 className="text-xl font-bold tracking-tight flex items-center gap-2">
-        {title}
-        <Badge variant="outline" className="text-[10px] opacity-50 border-white/10 uppercase">
-          {skills.length} Items
-        </Badge>
-      </h3>
+const SkillCategory = ({ title, skills, startIndex, animate }: { title: string, skills: any[], startIndex: number, animate: boolean }) => {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ threshold: 0.1 });
+
+  return (
+    <div ref={ref} className="space-y-6">
+      <div className={`flex items-center gap-3 scroll-reveal ${isVisible ? 'revealed' : ''}`}>
+        <div className="h-8 w-1 bg-emerald-500 rounded-full" />
+        <h3 className="text-xl font-bold tracking-tight flex items-center gap-2">
+          {title}
+          <Badge variant="outline" className="text-[10px] opacity-50 border-white/10 uppercase">
+            {skills.length} Items
+          </Badge>
+        </h3>
+      </div>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+        {skills.map((skill, idx) => (
+          <SkillCard
+            key={skill.name}
+            name={skill.name}
+            icon={skill.icon}
+            level={skill.level}
+            index={idx}
+            animate={isVisible}
+          />
+        ))}
+      </div>
     </div>
-    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
-      {skills.map((skill, idx) => (
-        <SkillCard
-          key={skill.name}
-          name={skill.name}
-          icon={skill.icon}
-          level={skill.level}
-          index={startIndex + idx}
-        />
-      ))}
-    </div>
-  </div>
-);
+  );
+};
 
 const SkillsSection: React.FC = () => {
+  const { ref: headingRef, isVisible: headingVisible } = useScrollReveal<HTMLDivElement>();
+
   const programmingLanguages = [
     { name: 'C', icon: <Code />, level: 70 },
     { name: 'C++', icon: <Code />, level: 85 },
@@ -142,27 +178,27 @@ const SkillsSection: React.FC = () => {
       <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-emerald-500/5 rounded-full blur-[100px] pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="text-center mb-20 animate-fade-in">
+        <div ref={headingRef} className={`text-center mb-20 scroll-reveal ${headingVisible ? 'revealed' : ''}`}>
           <h2 className="text-4xl font-bold mb-4 tracking-tight">
             Technical <span className="text-gradient">Expertise</span>
           </h2>
-          <div className="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full mb-8" />
+          <div className={`heading-line ${headingVisible ? 'revealed' : ''} mb-8`} />
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
             A comprehensive overview of my technological toolkit and proficiency across multiple domains.
           </p>
         </div>
 
         <div className="space-y-20">
-          <SkillCategory title="Programming Languages" skills={programmingLanguages} startIndex={0} />
-          <SkillCategory title="Web Technologies" skills={webTechnologies} startIndex={4} />
-          <SkillCategory title="Machine Learning & AI" skills={aiAndML} startIndex={11} />
+          <SkillCategory title="Programming Languages" skills={programmingLanguages} startIndex={0} animate={false} />
+          <SkillCategory title="Web Technologies" skills={webTechnologies} startIndex={4} animate={false} />
+          <SkillCategory title="Machine Learning & AI" skills={aiAndML} startIndex={11} animate={false} />
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
-            <SkillCategory title="Databases" skills={databases} startIndex={16} />
-            <SkillCategory title="Mobile Development" skills={mobileDevelopment} startIndex={19} />
+            <SkillCategory title="Databases" skills={databases} startIndex={16} animate={false} />
+            <SkillCategory title="Mobile Development" skills={mobileDevelopment} startIndex={19} animate={false} />
           </div>
 
-          <SkillCategory title="Tools & Platforms" skills={toolsAndPlatforms} startIndex={22} />
+          <SkillCategory title="Tools & Platforms" skills={toolsAndPlatforms} startIndex={22} animate={false} />
         </div>
       </div>
     </section>

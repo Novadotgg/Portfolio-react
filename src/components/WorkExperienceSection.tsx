@@ -1,6 +1,7 @@
 import { Briefcase, Rocket, GraduationCap, FlaskConical, Smartphone, MapPin, Calendar, ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useScrollReveal } from "@/hooks/useScrollReveal";
 
 const parseStartDate = (duration: string): Date => {
   const startPart = duration.split("-")[0].trim();
@@ -101,76 +102,87 @@ const getIcon = (category: string) => {
 };
 
 export default function WorkExperienceSection() {
+  const { ref: headingRef, isVisible: headingVisible } = useScrollReveal<HTMLDivElement>();
+
   return (
     <section id="experience" className="py-24 px-4 md:px-20 bg-background relative overflow-hidden">
       {/* Decorative Glow */}
       <div className="absolute top-1/2 left-0 -translate-y-1/2 w-64 h-64 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="container relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
+        <div ref={headingRef} className={`text-center mb-16 scroll-reveal ${headingVisible ? 'revealed' : ''}`}>
           <h2 className="text-4xl font-bold mb-4 tracking-tight">
             Work <span className="text-gradient">Experience</span>
           </h2>
-          <div className="h-1.5 w-24 bg-emerald-500 mx-auto rounded-full mb-8" />
+          <div className={`heading-line ${headingVisible ? 'revealed' : ''} mb-8`} />
         </div>
 
         <div className="max-w-4xl mx-auto">
           <div className="relative border-l-2 border-dashed border-emerald-500/30 ml-4 md:ml-8 pl-8 md:pl-12 space-y-12">
             {experiences.map((exp, index) => (
-              <div
-                key={index}
-                className="relative animate-slide-in"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                {/* Timeline Connector Dot */}
-                <div className="absolute -left-[53px] md:-left-[69px] top-0 w-10 h-10 bg-background border-2 border-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)] z-20 overflow-hidden group-hover:scale-110 transition-transform">
-                  <div className="text-emerald-400">
-                    {getIcon(exp.category)}
-                  </div>
-                </div>
-
-                <div className="group relative">
-                  {/* Card Glow Background */}
-                  <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500/20 to-emerald-800/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
-
-                  <Card className="relative bg-secondary/30 backdrop-blur-lg border border-white/5 group-hover:border-emerald-500/30 transition-all duration-300 rounded-2xl overflow-hidden shadow-xl will-change-transform">
-                    <CardContent className="p-8">
-                      <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
-                        <div>
-                          <div className="flex items-center gap-3 mb-2 flex-wrap">
-                            <h3 className="text-2xl font-bold text-foreground group-hover:text-emerald-400 transition-colors">
-                              {exp.role}
-                            </h3>
-                            <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-400 border-none hover:bg-emerald-500/20">
-                              {exp.category}
-                            </Badge>
-                          </div>
-                          <p className="text-lg font-semibold text-emerald-500/80 flex items-center gap-2">
-                            {exp.company}
-                          </p>
-                        </div>
-                        <div className="flex flex-col items-start md:items-end text-sm text-muted-foreground whitespace-nowrap">
-                          <span className="flex items-center gap-2 mb-1">
-                            <Calendar className="h-4 w-4" />
-                            {exp.duration}
-                          </span>
-                          <span className="flex items-center gap-2">
-                            <MapPin className="h-4 w-4" />
-                            {exp.location}
-                          </span>
-                        </div>
-                      </div>
-                      <p className="text-muted-foreground leading-relaxed text-lg">
-                        {exp.description}
-                      </p>
-                    </CardContent>
-                  </Card>
-                </div>
-              </div>
+              <TimelineCard key={index} exp={exp} index={index} />
             ))}
+            {/* Timeline terminus pulsing dot */}
+            <div className="absolute -left-[7px] bottom-0 w-3 h-3 rounded-full bg-emerald-500/50 timeline-dot-pulse" />
           </div>
         </div>
       </div>
     </section>
+  );
+}
+
+function TimelineCard({ exp, index }: { exp: typeof experiences[0]; index: number }) {
+  const { ref, isVisible } = useScrollReveal<HTMLDivElement>({ threshold: 0.15 });
+
+  return (
+    <div
+      ref={ref}
+      className={`relative scroll-reveal ${isVisible ? 'revealed' : ''} stagger-${Math.min(index + 1, 10)}`}
+    >
+      {/* Timeline Connector Dot */}
+      <div className={`absolute -left-[53px] md:-left-[69px] top-0 w-10 h-10 bg-background border-2 border-emerald-500 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(16,185,129,0.2)] z-20 overflow-hidden transition-all duration-500 ${isVisible ? 'scale-100 opacity-100' : 'scale-75 opacity-0'}`}>
+        <div className="text-emerald-400">
+          {getIcon(exp.category)}
+        </div>
+      </div>
+
+      <div className="group relative">
+        {/* Card Glow Background */}
+        <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500/20 to-emerald-800/20 rounded-2xl blur opacity-0 group-hover:opacity-100 transition duration-500" />
+
+        <div className="glass-card shadow-xl">
+          <CardContent className="p-8">
+            <div className="flex flex-col md:flex-row md:items-start justify-between gap-4 mb-4">
+              <div>
+                <div className="flex items-center gap-3 mb-2 flex-wrap">
+                  <h3 className="text-2xl font-bold text-foreground group-hover:text-emerald-400 transition-colors">
+                    {exp.role}
+                  </h3>
+                  <Badge variant="secondary" className="bg-emerald-500/10 text-emerald-400 border-none hover:bg-emerald-500/20">
+                    {exp.category}
+                  </Badge>
+                </div>
+                <p className="text-lg font-semibold text-emerald-500/80 flex items-center gap-2">
+                  {exp.company}
+                </p>
+              </div>
+              <div className="flex flex-col items-start md:items-end text-sm text-muted-foreground whitespace-nowrap">
+                <span className="flex items-center gap-2 mb-1">
+                  <Calendar className="h-4 w-4" />
+                  {exp.duration}
+                </span>
+                <span className="flex items-center gap-2">
+                  <MapPin className="h-4 w-4" />
+                  {exp.location}
+                </span>
+              </div>
+            </div>
+            <p className="text-muted-foreground leading-relaxed text-lg">
+              {exp.description}
+            </p>
+          </CardContent>
+        </div>
+      </div>
+    </div>
   );
 }

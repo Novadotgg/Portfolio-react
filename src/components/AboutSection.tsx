@@ -1,7 +1,12 @@
 import React from 'react';
 import { User, Mail, MapPin, Calendar, Code2, Brain, Database, Globe } from 'lucide-react';
+import { useScrollReveal } from '@/hooks/useScrollReveal';
 
 const AboutSection: React.FC = () => {
+  const { ref: headingRef, isVisible: headingVisible } = useScrollReveal<HTMLDivElement>();
+  const { ref: leftRef, isVisible: leftVisible } = useScrollReveal<HTMLDivElement>({ rootMargin: '0px 0px -80px 0px' });
+  const { ref: rightRef, isVisible: rightVisible } = useScrollReveal<HTMLDivElement>({ rootMargin: '0px 0px -80px 0px' });
+
   const highlights = [
     { icon: <Code2 className="h-4 w-4" />, label: "DSA Expert" },
     { icon: <Brain className="h-4 w-4" />, label: "ML & NLP" },
@@ -18,18 +23,18 @@ const AboutSection: React.FC = () => {
       </div>
 
       <div className="container relative z-10">
-        <div className="text-center mb-16 animate-fade-in">
+        <div ref={headingRef} className={`text-center mb-16 scroll-reveal ${headingVisible ? 'revealed' : ''}`}>
           <h2 className="text-4xl font-bold mb-4 tracking-tight">
             About <span className="text-gradient">Me</span>
           </h2>
-          <div className="h-1.5 w-20 bg-emerald-500 mx-auto rounded-full mb-6" />
+          <div className={`heading-line ${headingVisible ? 'revealed' : ''} mb-6`} />
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg leading-relaxed">
             I'm a passionate Computer Science Engineer dedicated to building innovative solutions at the intersection of software and intelligence.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <div className="flex flex-col justify-center space-y-6 animate-slide-in" style={{ animationDelay: '0.2s' }}>
+          <div ref={leftRef} className={`flex flex-col justify-center space-y-6 scroll-reveal-left ${leftVisible ? 'revealed' : ''}`}>
             <div className="space-y-4">
               <h3 className="text-2xl font-bold flex items-center gap-2">
                 <span className="h-8 w-1 bg-emerald-500 rounded-full inline-block" />
@@ -44,7 +49,7 @@ const AboutSection: React.FC = () => {
               {highlights.map((item, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center gap-2 px-4 py-2 bg-secondary/50 backdrop-blur-sm border border-emerald-500/20 rounded-full hover:border-emerald-500/50 transition-colors group cursor-default"
+                  className={`flex items-center gap-2 px-4 py-2 bg-secondary/50 backdrop-blur-sm border border-emerald-500/20 rounded-full hover:border-emerald-500/50 transition-all group cursor-default scroll-reveal-scale ${leftVisible ? 'revealed' : ''} stagger-${idx + 1}`}
                 >
                   <span className="text-emerald-400 group-hover:scale-110 transition-transform">{item.icon}</span>
                   <span className="text-sm font-medium">{item.label}</span>
@@ -59,12 +64,12 @@ const AboutSection: React.FC = () => {
             </div>
           </div>
 
-          <div className="animate-slide-in" style={{ animationDelay: '0.4s' }}>
+          <div ref={rightRef} className={`scroll-reveal-right ${rightVisible ? 'revealed' : ''}`}>
             <div className="relative group">
               {/* Card Glow Effect */}
               <div className="absolute -inset-0.5 bg-gradient-to-r from-emerald-500 to-emerald-800 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
 
-              <div className="relative bg-secondary/40 backdrop-blur-lg p-8 rounded-2xl shadow-2xl border border-white/10 will-change-transform">
+              <div className="glass-card p-8 shadow-2xl">
                 <h3 className="text-2xl font-bold mb-8 flex items-center gap-2">
                   <User className="h-6 w-6 text-emerald-400" />
                   Personal Information
