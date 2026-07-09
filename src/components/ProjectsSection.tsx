@@ -2,6 +2,7 @@ import React, { useState, useRef, useCallback } from 'react';
 import { ExternalLink, Github, Grid, List, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Badge } from "@/components/ui/badge";
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
@@ -154,6 +155,7 @@ const projects: Project[] = [
 
 const ProjectsSection: React.FC = () => {
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
+  const [activeCategory, setActiveCategory] = useState<string>('design');
   const { ref: headingRef, isVisible: headingVisible } = useScrollReveal<HTMLDivElement>();
 
   return (
@@ -173,21 +175,38 @@ const ProjectsSection: React.FC = () => {
           </p>
         </div>
 
-        <Tabs defaultValue="web" className="w-full">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
-            <TabsList className="bg-secondary/50 backdrop-blur-md p-1 border border-white/5 rounded-2xl h-auto">
-              {['web', 'mobile', 'design', 'security'].map((cat) => (
-                <TabsTrigger
-                  key={cat}
-                  value={cat}
-                  className="px-6 py-2.5 rounded-xl data-[state=active]:bg-emerald-500 data-[state=active]:text-white transition-all duration-300"
-                >
-                  {cat === 'web' ? 'Web' : cat === 'mobile' ? 'Android' : cat === 'design' ? 'ML & AI' : 'Blockchain'}
-                </TabsTrigger>
-              ))}
-            </TabsList>
+        <Tabs value={activeCategory} onValueChange={setActiveCategory} className="w-full">
+          {/* Mobile Dropdown View */}
+          <div className="w-full md:hidden mb-8">
+            <Select value={activeCategory} onValueChange={setActiveCategory}>
+              <SelectTrigger className="w-full bg-secondary/50 backdrop-blur-md border border-white/5 rounded-2xl h-12 text-foreground font-medium focus:ring-emerald-500 focus:border-emerald-500">
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent className="bg-emerald-950/95 border border-emerald-500/20 text-foreground rounded-2xl backdrop-blur-md">
+                <SelectItem value="design" className="focus:bg-emerald-500/20 focus:text-emerald-400 py-3 rounded-xl">ML & AI</SelectItem>
+                <SelectItem value="web" className="focus:bg-emerald-500/20 focus:text-emerald-400 py-3 rounded-xl">Web Development</SelectItem>
+                <SelectItem value="mobile" className="focus:bg-emerald-500/20 focus:text-emerald-400 py-3 rounded-xl">Android Development</SelectItem>
+                <SelectItem value="security" className="focus:bg-emerald-500/20 focus:text-emerald-400 py-3 rounded-xl">Blockchain</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
 
-            <div className="flex bg-secondary/50 backdrop-blur-md p-1 border border-white/5 rounded-2xl">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12 w-full">
+            <div className="hidden md:flex w-full md:w-auto overflow-x-auto scrollbar-none pb-1 -mb-1 justify-start md:justify-center">
+              <TabsList className="bg-secondary/50 backdrop-blur-md p-1 border border-white/5 rounded-2xl h-auto flex shrink-0">
+                {['design', 'web', 'mobile', 'security'].map((cat) => (
+                  <TabsTrigger
+                    key={cat}
+                    value={cat}
+                    className="px-6 py-2.5 rounded-xl data-[state=active]:bg-emerald-500 data-[state=active]:text-white transition-all duration-300"
+                  >
+                    {cat === 'design' ? 'ML & AI' : cat === 'web' ? 'Web' : cat === 'mobile' ? 'Android' : 'Blockchain'}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+
+            <div className="hidden md:flex bg-secondary/50 backdrop-blur-md p-1 border border-white/5 rounded-2xl">
               <Button
                 variant="ghost"
                 size="icon"
@@ -207,7 +226,7 @@ const ProjectsSection: React.FC = () => {
             </div>
           </div>
 
-          {['web', 'mobile', 'design', 'security'].map((category) => (
+          {['design', 'web', 'mobile', 'security'].map((category) => (
             <TabsContent key={category} value={category} className="mt-0 focus-visible:outline-none focus-visible:ring-0">
               <div className={viewMode === 'grid'
                 ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8"
@@ -296,7 +315,7 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mt-auto">
+          <div className="flex flex-row gap-3 mt-auto">
             <Button variant="outline" size="sm" asChild className="btn-shine flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
               <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
                 <Github className="h-4 w-4 mr-2" /> Code

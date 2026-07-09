@@ -8,8 +8,8 @@ const AboutSection: React.FC = () => {
   const { ref: rightRef, isVisible: rightVisible } = useScrollReveal<HTMLDivElement>({ rootMargin: '0px 0px -80px 0px' });
 
   const highlights = [
-    { icon: <Code2 className="h-4 w-4" />, label: "DSA Expert" },
-    { icon: <Brain className="h-4 w-4" />, label: "ML & NLP" },
+    { icon: <Code2 className="h-4 w-4" />, label: "Problem Solver" },
+    { icon: <Brain className="h-4 w-4" />, label: "AI & ML" },
     { icon: <Globe className="h-4 w-4" />, label: "Full Stack" },
     { icon: <Database className="h-4 w-4" />, label: "Blockchain" },
   ];

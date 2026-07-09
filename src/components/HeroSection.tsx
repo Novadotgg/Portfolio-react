@@ -43,7 +43,7 @@ const HeroSection: React.FC = () => {
     { text: "RAG Pipelines", x: -200, y: 70 },
     { text: "Custom APIs", x: 200, y: 70 },
     { text: "Data Dashboards", x: -100, y: 160 },
-    { text: "Blockchain dApps", x: 100, y: 160 },
+    { text: "Blockchain", x: 100, y: 160 },
   ];
 
   // Adjust coordinates for mobile by scaling them down and tweaking positioning
@@ -67,7 +67,7 @@ const HeroSection: React.FC = () => {
 
           {/* Status Badge */}
           <div className="flex justify-center animate-fade-up" style={{ animationDelay: "0.1s" }}>
-            <div 
+            <div
               className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-sm font-medium transition-all duration-500"
               style={{ opacity: showBubbles ? 0 : 1, pointerEvents: showBubbles ? 'none' : 'auto', transform: showBubbles ? 'scale(0.95)' : 'scale(1)' }}
             >
@@ -84,7 +84,7 @@ const HeroSection: React.FC = () => {
               {/* Animated Rings */}
               <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
 
-              <div 
+              <div
                 className="relative cursor-pointer"
                 onClick={handleAvatarClick}
                 title="Click me!"
@@ -107,8 +107,8 @@ const HeroSection: React.FC = () => {
                     className="absolute top-1/2 left-1/2 transition-all duration-700 ease-out z-20 pointer-events-none flex items-center justify-center"
                     style={{
                       opacity: showBubbles ? 1 : 0,
-                      transform: showBubbles 
-                        ? `translate(calc(-50% + ${skill.x}px), calc(-50% + ${skill.y}px)) scale(1)` 
+                      transform: showBubbles
+                        ? `translate(calc(-50% + ${skill.x}px), calc(-50% + ${skill.y}px)) scale(1)`
                         : `translate(-50%, -50%) scale(0)`,
                       transitionDelay: showBubbles ? `${index * 150}ms` : '0ms'
                     }}
@@ -122,7 +122,7 @@ const HeroSection: React.FC = () => {
             </div>
           </div>
 
-          <h2 
+          <h2
             className="text-emerald-400 font-semibold text-lg md:text-xl transition-all duration-500"
             style={{ opacity: showBubbles ? 0 : 1, pointerEvents: showBubbles ? 'none' : 'auto', transform: showBubbles ? 'scale(0.95)' : 'scale(1)' }}
           >
@@ -135,7 +135,7 @@ const HeroSection: React.FC = () => {
             </span>
             <br />
             <span className="text-2xl md:text-4xl text-muted-foreground/90">
-              <TypewriterText 
+              <TypewriterText
                 phrases={[
                   "Full-Stack Engineer",
                   "ML Researcher",
