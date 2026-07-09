@@ -10,7 +10,8 @@ import {
   Wrench,
   Layers,
   Link,
-  ChevronRight
+  ChevronRight,
+  Cloud
 } from 'lucide-react';
 import { Badge } from "@/components/ui/badge";
 import { useScrollReveal } from '@/hooks/useScrollReveal';
@@ -158,6 +159,11 @@ const SkillsSection: React.FC = () => {
     { name: 'Language Models', icon: <Brain />, level: 75 },
   ];
 
+  const cloud = [
+    { name: 'GCP', icon: <Cloud />, level: 60 },
+    { name: 'AWS', icon: <Cloud />, level: 60 },
+  ];
+
   const toolsAndPlatforms = [
     { name: 'Git', icon: <GitBranch />, level: 85 },
     { name: 'Docker', icon: <Wrench />, level: 70 },
@@ -198,7 +204,8 @@ const SkillsSection: React.FC = () => {
             <SkillCategory title="Mobile Development" skills={mobileDevelopment} startIndex={19} animate={false} />
           </div>
 
-          <SkillCategory title="Tools & Platforms" skills={toolsAndPlatforms} startIndex={22} animate={false} />
+          <SkillCategory title="Cloud" skills={cloud} startIndex={22} animate={false} />
+          <SkillCategory title="Tools & Platforms" skills={toolsAndPlatforms} startIndex={24} animate={false} />
         </div>
       </div>
     </section>
