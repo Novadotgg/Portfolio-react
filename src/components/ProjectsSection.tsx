@@ -16,6 +16,7 @@ import nnet from '../pics/nn.jpg';
 import aci from '../pics/aqi.jpg';
 import twe from '../pics/tweet.jpg';
 import ghub from '../pics/ghub.jpg';
+import persist from '../pics/persist.png';
 
 interface Project {
   id: number;
@@ -138,6 +139,16 @@ const projects: Project[] = [
     githubUrl: "https://github.com/Novadotgg/Gacker",
     liveUrl: "https://gacker.vercel.app/",
     category: "web"
+  },
+  {
+    id: 12,
+    title: "Persist",
+    description: "MCP connection orchestrator done by qwen 2.5-7B instruct",
+    image: persist,
+    tags: ["LLM", "MCP", "Fast API", "Python"],
+    githubUrl: "https://github.com/Novadotgg/Persist",
+    liveUrl: "#",
+    category: "design"
   },
 ];
 
