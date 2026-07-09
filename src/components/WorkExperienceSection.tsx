@@ -122,8 +122,6 @@ export default function WorkExperienceSection() {
             {experiences.map((exp, index) => (
               <TimelineCard key={index} exp={exp} index={index} />
             ))}
-            {/* Timeline terminus pulsing dot */}
-            <div className="absolute -left-[7px] bottom-0 w-3 h-3 rounded-full bg-emerald-500/50 timeline-dot-pulse" />
           </div>
         </div>
       </div>
