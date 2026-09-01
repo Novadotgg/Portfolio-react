@@ -18,6 +18,7 @@ import aci from '../pics/aqi.jpg';
 import twe from '../pics/tweet.jpg';
 import ghub from '../pics/ghub.jpg';
 import persist from '../pics/persist.png';
+import Vally from '../pics/vally.jpeg';
 
 interface Project {
   id: number;
@@ -150,6 +151,16 @@ const projects: Project[] = [
     githubUrl: "https://github.com/Novadotgg/Persist",
     liveUrl: "#",
     category: "design"
+  },
+  {
+    id: 13,
+    title: "VAlly",
+    description: "Advanced AI financial assistant",
+    image: Vally,
+    tags: ["React Native", "Python", "FastAPI", "Postgres"],
+    githubUrl: "#",
+    liveUrl: "#",
+    category: "mobile"
   },
 ];
 
