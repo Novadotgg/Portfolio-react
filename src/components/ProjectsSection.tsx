@@ -19,6 +19,7 @@ import twe from '../pics/tweet.jpg';
 import ghub from '../pics/ghub.jpg';
 import persist from '../pics/persist.png';
 import Vally from '../pics/vally.jpeg';
+import ppt from '../pics/ppt gen.png';
 
 interface Project {
   id: number;
@@ -161,6 +162,16 @@ const projects: Project[] = [
     githubUrl: "#",
     liveUrl: "#",
     category: "mobile"
+  },
+  {
+    id: 14,
+    title: "Agentic PPT gen",
+    description: "Agentic PPT generator using Langchain, Langgraph.",
+    image: ppt,
+    tags: ["LLM", "Langchain", "Langgraph", "Fast API", "Python"],
+    githubUrl: "https://github.com/Novadotgg/agentic-ppt",
+    liveUrl: "https://agentic-ppt.vercel.app/",
+    category: "design"
   },
 ];
 
