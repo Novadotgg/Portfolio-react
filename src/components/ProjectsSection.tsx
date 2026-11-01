@@ -20,6 +20,7 @@ import ghub from '../pics/ghub.jpg';
 import persist from '../pics/persist.png';
 import Vally from '../pics/vally.jpeg';
 import ppt from '../pics/ppt gen.png';
+import diwali from '../pics/diwali-bites.png';
 
 interface Project {
   id: number;
@@ -173,6 +174,16 @@ const projects: Project[] = [
     liveUrl: "https://agentic-ppt.vercel.app/",
     category: "design"
   },
+  {
+    id: 15,
+    title: "Diwali Bites",
+    description: "Diwali Bites for a stall that sells the menu listed",
+    image: diwali,
+    tags: ["Javascript", "Typescript"],
+    githubUrl: "https://github.com/Novadotgg/Diwali-bites",
+    liveUrl: "https://diwali-bites.vercel.app/",
+    category: "web"
+  }
 ];
 
 const ProjectsSection: React.FC = () => {

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
-import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import TypewriterText from "@/components/TypewriterText";
 
-import profilePic from "../pics/prof.png";
+import profilePic from "../pics/prof.webp";
 
 const HeroSection: React.FC = () => {
   const [showBubbles, setShowBubbles] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [imageError, setImageError] = useState(false);
 
   useEffect(() => {
     // Check if window is undefined (SSR safety, though Vite is client-side)
@@ -94,10 +95,22 @@ const HeroSection: React.FC = () => {
 
                 {/* Avatar */}
                 <Avatar className="relative h-40 w-40 sm:h-48 sm:w-48 border-4 border-emerald-500/50 shadow-2xl transition-transform duration-500 group-hover:scale-[1.05] active:scale-95 z-10 bg-emerald-950">
-                  <AvatarImage src={profilePic} alt="Sayan" className="object-cover" />
-                  <AvatarFallback className="bg-emerald-900 text-emerald-100 text-2xl font-bold">
-                    SM
-                  </AvatarFallback>
+                  <img
+                    src={profilePic}
+                    alt="Sayan"
+                    width={192}
+                    height={192}
+                    loading="eager"
+                    fetchPriority="high"
+                    decoding="async"
+                    onError={() => setImageError(true)}
+                    className={`h-full w-full object-cover transition-opacity duration-300 ${imageError ? "hidden" : "block"}`}
+                  />
+                  {imageError && (
+                    <AvatarFallback className="bg-emerald-900 text-emerald-100 text-2xl font-bold">
+                      SM
+                    </AvatarFallback>
+                  )}
                 </Avatar>
 
                 {/* Animated Chat Bubbles */}
