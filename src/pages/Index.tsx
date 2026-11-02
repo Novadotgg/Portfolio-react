@@ -1,5 +1,4 @@
-
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import Navbar from '@/components/Navbar';
 import HeroSection from '@/components/HeroSection';
 import AboutSection from '@/components/AboutSection';
@@ -11,27 +10,14 @@ import WorkExperienceSection from "@/components/WorkExperienceSection";
 import PublishedPapersSection from "@/components/PublishedPapersSection";
 import CursorGlow from '@/components/CursorGlow';
 import SectionDivider from '@/components/SectionDivider';
-
 import Footer from '@/components/Footer';
 
 const Index = () => {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
-    <>
-      {/* Page Loader */}
-      <div className={`page-loader ${!loading ? 'loaded' : ''}`}>
-        <div className="page-loader-ring" />
-      </div>
-
-      <div className="min-h-screen bg-background text-foreground">
-        <CursorGlow />
-        <Navbar />
+    <div className="min-h-screen bg-background text-foreground">
+      <CursorGlow />
+      <Navbar />
+      <main id="main-content">
         <HeroSection />
         <SectionDivider variant="wave" />
         <AboutSection />
@@ -47,9 +33,9 @@ const Index = () => {
         <ProjectsSection />
         <SectionDivider variant="wave" flip />
         <ContactSection />
-        <Footer />
-      </div>
-    </>
+      </main>
+      <Footer />
+    </div>
   );
 };
 

@@ -6,21 +6,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Badge } from "@/components/ui/badge";
 import { useScrollReveal } from '@/hooks/useScrollReveal';
 
-import pic from '../pics/Todo.jpg';
-import url from '../pics/url.jpg';
-import ev from '../pics/evergreen.png';
-import mlmp from '../pics/mlimp.jpg';
-import mov from '../pics/movime.jpg';
-import cr from '../pics/cropiee.jpg';
-import bc from '../pics/bchaain.jpg';
-import nnet from '../pics/nn.jpg';
-import aci from '../pics/aqi.jpg';
-import twe from '../pics/tweet.jpg';
-import ghub from '../pics/ghub.jpg';
-import persist from '../pics/persist.png';
-import Vally from '../pics/vally.jpeg';
-import ppt from '../pics/ppt gen.png';
-import diwali from '../pics/diwali-bites.png';
+import pic from '../pics/Todo.webp';
+import url from '../pics/url.webp';
+import ev from '../pics/evergreen.webp';
+import mlmp from '../pics/mlimp.webp';
+import mov from '../pics/movime.webp';
+import cr from '../pics/cropiee.webp';
+import bc from '../pics/bchaain.webp';
+import nnet from '../pics/nn.webp';
+import aci from '../pics/aqi.webp';
+import twe from '../pics/tweet.webp';
+import ghub from '../pics/ghub.webp';
+import persist from '../pics/persist.webp';
+import Vally from '../pics/vally.webp';
+import ppt from '../pics/ppt gen.webp';
+import diwali from '../pics/diwali-bites.webp';
 
 interface Project {
   id: number;
@@ -244,6 +244,7 @@ const ProjectsSection: React.FC = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setViewMode('grid')}
+                aria-label="Switch to grid view"
                 className={`w-10 h-10 rounded-xl transition-all ${viewMode === 'grid' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-white/5 text-muted-foreground'}`}
               >
                 <Grid className="h-4 w-4" />
@@ -252,6 +253,7 @@ const ProjectsSection: React.FC = () => {
                 variant="ghost"
                 size="icon"
                 onClick={() => setViewMode('list')}
+                aria-label="Switch to list view"
                 className={`w-10 h-10 rounded-xl transition-all ${viewMode === 'list' ? 'bg-emerald-500 text-white shadow-lg' : 'hover:bg-white/5 text-muted-foreground'}`}
               >
                 <List className="h-4 w-4" />
@@ -327,6 +329,10 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
           <img
             src={project.image}
             alt={project.title}
+            width={800}
+            height={450}
+            loading="lazy"
+            decoding="async"
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
           />
         </div>
@@ -349,16 +355,28 @@ const GridProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
           </div>
 
           <div className="flex flex-row gap-3 mt-auto">
-            <Button variant="outline" size="sm" asChild className="btn-shine flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
-              <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+            {project.githubUrl && project.githubUrl !== '#' ? (
+              <Button variant="outline" size="sm" asChild className="btn-shine flex-1 rounded-xl border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all h-11">
+                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View source code for ${project.title}`}>
+                  <Github className="h-4 w-4 mr-2" /> Code
+                </a>
+              </Button>
+            ) : (
+              <Button variant="outline" size="sm" disabled className="flex-1 rounded-xl border-white/5 bg-white/5 opacity-50 cursor-not-allowed h-11" aria-label={`Source code not publicly available for ${project.title}`}>
                 <Github className="h-4 w-4 mr-2" /> Code
-              </a>
-            </Button>
-            <Button size="sm" asChild className="btn-shine flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-11 shadow-lg shadow-emerald-900/20">
-              <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+              </Button>
+            )}
+            {project.liveUrl && project.liveUrl !== '#' ? (
+              <Button size="sm" asChild className="btn-shine flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-11 shadow-lg shadow-emerald-900/20">
+                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`View live demo for ${project.title}`}>
+                  <ExternalLink className="h-4 w-4 mr-2" /> View
+                </a>
+              </Button>
+            ) : (
+              <Button size="sm" disabled className="flex-1 bg-emerald-600/50 rounded-xl h-11 opacity-50 cursor-not-allowed" aria-label={`Live demo not available for ${project.title}`}>
                 <ExternalLink className="h-4 w-4 mr-2" /> View
-              </a>
-            </Button>
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -381,6 +399,10 @@ const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
               <img
                 src={project.image}
                 alt={project.title}
+                width={800}
+                height={450}
+                loading="lazy"
+                decoding="async"
                 className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
               />
             </div>
@@ -402,16 +424,28 @@ const ListProjectCard: React.FC<{ project: Project, index: number }> = ({ projec
             </div>
 
             <div className="flex flex-col sm:flex-row gap-4 max-w-md">
-              <Button variant="outline" asChild className="btn-shine flex-1 rounded-xl h-12 border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-base">
-                <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
+              {project.githubUrl && project.githubUrl !== '#' ? (
+                <Button variant="outline" asChild className="btn-shine flex-1 rounded-xl h-12 border-white/5 bg-white/5 hover:bg-white/10 hover:border-white/10 transition-all text-base">
+                  <a href={project.githubUrl} target="_blank" rel="noopener noreferrer" aria-label={`View source code for ${project.title}`}>
+                    <Github className="h-5 w-5 mr-3" /> Source Code
+                  </a>
+                </Button>
+              ) : (
+                <Button variant="outline" disabled className="flex-1 rounded-xl h-12 border-white/5 bg-white/5 opacity-50 cursor-not-allowed text-base" aria-label={`Source code not publicly available for ${project.title}`}>
                   <Github className="h-5 w-5 mr-3" /> Source Code
-                </a>
-              </Button>
-              <Button asChild className="btn-shine flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-12 shadow-lg shadow-emerald-900/20 text-base">
-                <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                </Button>
+              )}
+              {project.liveUrl && project.liveUrl !== '#' ? (
+                <Button asChild className="btn-shine flex-1 bg-emerald-600 hover:bg-emerald-700 rounded-xl h-12 shadow-lg shadow-emerald-900/20 text-base">
+                  <a href={project.liveUrl} target="_blank" rel="noopener noreferrer" aria-label={`View live demo for ${project.title}`}>
+                    <ExternalLink className="h-5 w-5 mr-3" /> Live Demo
+                  </a>
+                </Button>
+              ) : (
+                <Button disabled className="flex-1 bg-emerald-600/50 rounded-xl h-12 opacity-50 cursor-not-allowed text-base" aria-label={`Live demo not available for ${project.title}`}>
                   <ExternalLink className="h-5 w-5 mr-3" /> Live Demo
-                </a>
-              </Button>
+                </Button>
+              )}
             </div>
           </div>
         </div>

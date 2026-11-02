@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import TypewriterText from "@/components/TypewriterText";
 
-import profilePic from "../pics/prof.webp";
+const profilePic = "/prof.webp";
 
 const HeroSection: React.FC = () => {
   const [showBubbles, setShowBubbles] = useState(false);
@@ -86,8 +86,17 @@ const HeroSection: React.FC = () => {
               <div className="absolute -inset-1 rounded-full bg-gradient-to-r from-emerald-600 to-emerald-400 blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
 
               <div
+                role="button"
+                tabIndex={0}
+                aria-label="Toggle technical specialties bubbles"
                 className="relative cursor-pointer"
                 onClick={handleAvatarClick}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    handleAvatarClick();
+                  }
+                }}
                 title="Click me!"
               >
                 {/* Glowing Background */}
@@ -171,13 +180,13 @@ const HeroSection: React.FC = () => {
                 size="lg"
                 className="btn-shine bg-emerald-600 hover:bg-emerald-700 text-white shadow-xl shadow-emerald-900/40 w-full sm:w-auto px-8"
               >
-                <a href="/Sayan_resume.pdf" download>
+                <a href="/Sayan_resume.pdf" download aria-label="Download Sayan's resume PDF">
                   Download Resume
                 </a>
               </Button>
 
               <Button variant="outline" size="lg" asChild className="btn-shine w-full sm:w-auto px-8 border-emerald-500/30 hover:bg-emerald-500/10">
-                <a href="#contact">Contact Me</a>
+                <a href="#contact" aria-label="Navigate to contact section">Contact Me</a>
               </Button>
             </div>
           </div>

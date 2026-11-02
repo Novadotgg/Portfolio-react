@@ -25,7 +25,7 @@ const Navbar: React.FC = () => {
       setScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
@@ -101,7 +101,7 @@ const Navbar: React.FC = () => {
           >
             <div className="relative w-6 h-5 flex flex-col items-end justify-between">
               <span className={cn(
-                "h-0.5 bg-foreground rounded-full transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)]",
+                "h-0.5 bg-foreground rounded-full transition-all duration-500 [transition-timing-function:cubic-bezier(0.68,-0.6,0.32,1.6)]",
                 isOpen ? "w-6 rotate-[135deg] translate-y-[9px] bg-emerald-400" : "w-6"
               )} />
               <span className={cn(
@@ -109,7 +109,7 @@ const Navbar: React.FC = () => {
                 isOpen ? "w-0 opacity-0 -translate-x-4" : "w-4"
               )} />
               <span className={cn(
-                "h-0.5 bg-foreground rounded-full transition-all duration-500 ease-[cubic-bezier(0.68,-0.6,0.32,1.6)]",
+                "h-0.5 bg-foreground rounded-full transition-all duration-500 [transition-timing-function:cubic-bezier(0.68,-0.6,0.32,1.6)]",
                 isOpen ? "w-6 -rotate-[135deg] -translate-y-[9px] bg-emerald-400" : "w-2"
               )} />
             </div>
